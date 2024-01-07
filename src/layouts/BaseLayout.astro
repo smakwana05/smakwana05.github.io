@@ -1,7 +1,12 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+
 import '../styles/global.css';
+
+
+
 const {pageTitle} = Astro.props;
 ---
 <html lang="en">
@@ -13,12 +18,27 @@ const {pageTitle} = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Header />
+
+    <Header/>
     <h1>{pageTitle}</h1>
+    <main id="swup">
     <slot />
+    </main>
     <Footer />
     <script>
       import "../scripts/menu.js";
+      addEventListener("popstate", (event) => {
+        console.log("popostateevent");
+        console.log(event.state?.source);
+        console.log(window.swup.currentPageUrl);
+       });
+       console.log('swup not yet enabled', window.swup);
+        document.addEventListener('swup:enable', () => {
+          console.log('swup enabled', window.swup);
+         
+        });
+
     </script>
+   
   </body>
 </html>
