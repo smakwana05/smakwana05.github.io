@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const pageTitle = "About Me";
+const headerstyle = "bigheader";
 
 const identity = {
   firstName: "Jim",
@@ -21,7 +22,7 @@ const fontWeight = "600";
 const textCase = "uppercase";
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} headerstyle={headerstyle}>
 
         <style define:vars={{skillcolour, fontWeight, textCase}}>
             h1 {
