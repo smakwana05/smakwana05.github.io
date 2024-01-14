@@ -24,6 +24,16 @@ html {
 
   /* nav styles */
 
+img.imagetest {
+  max-width: 400px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.hidden {
+  opacity:0;
+  transition: 0.25s;
+}
 .nav-links {
     width: 100%;
     top: 5rem;
@@ -92,9 +102,27 @@ html {
 
   
   html.is-changing .transition-fade {
-    transition: opacity 0.25s ease;
+    // transition: 0.25s;
     opacity: 1;
   }
+
   html.is-animating .transition-fade {
     opacity: 0;
   }
+
+
+  // body.fadedout {
+  //   opacity: 0;
+  //   // transition: 1s;
+  // }
+
+  // body{
+  //   opacity: 0;
+  //   transition: 1s;
+  // }
+
+  body.fadedin {
+    opacity: 1;
+  }
+
+

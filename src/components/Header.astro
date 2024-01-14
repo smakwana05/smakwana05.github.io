@@ -1,13 +1,38 @@
 ---
-import Navigation from './Navigation.astro';
-import Hamburger from './Hamburger.astro';
-const {headerstyle} = Astro.props;
-
+import NavbarMobile from "./NavbarMobile.astro"
+import TitleLink from "./TitleLink.astro"
 ---
 
-<header class={headerstyle}>
-    <nav>
-        <Hamburger />
-        <Navigation/>
-    </nav>
-</header>
+
+<div class="header">
+    <TitleLink/>
+    <NavbarMobile/>
+
+    <div class="menu">
+        <nav class="menucard">	
+            <a href="/art" data-page="art" >Art</a>
+                <a class="submenu" href="/art/life-drawing" data-page="lifedrawing">Life Drawing</a>
+                <a class="submenu" href="/art/life-drawing" data-page="school">School</a>
+                <a class="submenu" href="/art/life-drawing" data-page="crafts">Crafts</a>
+            <a href="/Portfolio/BasicPage_3plusrows.html" data-page="architecture" >Architecture</a>
+            <a href="/Portfolio/BasicPage_2rows.html" data-page="travel" >Travel</a>
+            <a href="/Portfolio/BasicPage_Content.html" data-page="process" >Process</a>
+            <a href="/Portfolio/BasicPage_Alternate.html" data-page="about" >About</a>
+
+            <div class="footer-mobile">
+                <i class="fab fa-linkedin"></i>
+            <i class="fa-solid fa-square-envelope"></i>
+                
+
+                <label class="toggleCSSonly" tabindex="0">
+                    <input type="checkbox" id="darkModeToggleMobile">
+                    <span class="slider"></span>
+                    </label>
+            </div>
+        </nav>
+        
+    </div>
+    <div tabindex="-1" class="descriptionbox mobile">
+        <button tabindex="-1" class="descriptiontext mobile" tabindex="0" role="button"></button>
+    </div>	
+</div>	

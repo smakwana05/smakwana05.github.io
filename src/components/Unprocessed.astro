@@ -1,0 +1,33 @@
+---
+import { isRemoteAllowed } from 'astro/assets/utils';
+import { Image } from 'astro:assets';
+
+import type { ImageMetadata } from 'astro';
+
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/images/*.{jpeg,jpg,png,gif}');
+const { imagePath, altText } = Astro.props;
+const {url} = Astro.props;
+const {buttontext} = Astro.props;
+const {theme} = Astro.props;
+
+// const imagessun = import.meta.glob('/src/images/*.{jpeg,jpg,png,gif}');
+// console.log(imagessun);
+
+const ImageComponent = ({imagesrc}: {imagesrc: string}) => {
+  return (
+    <img src={imagesrc} />
+  );
+};
+
+
+
+if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "/src/images/*.{jpeg,jpg,png,gif}"`);
+---
+
+<button  tabindex="-1" class="item1">
+    <a class={"buttontext " + theme} href={url}>{buttontext}</a>   
+
+</button>
+
+

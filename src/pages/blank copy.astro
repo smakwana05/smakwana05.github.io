@@ -1,11 +1,9 @@
 ---
-import Header_old from '../components/Header_old.astro';
-import Footer_old from '../components/Footer_old.astro';
+
+import BaseLayout from "../layouts/BaseLayout.astro";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
-import '../styles/global_orig.scss';
-const {headerstyle} = Astro.props;
+import '../styles/global.scss';
 const {pageTitle} = Astro.props;
-const {footerstyle} = Astro.props;
 ---
 <html lang="en">
   <head>
@@ -15,16 +13,11 @@ const {footerstyle} = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body class="fadedout">
+  <body>
     
-    <Header_old headerstyle={headerstyle}/>
     <main id="swup" class="transition-fade">
-    <h1>{pageTitle}</h1>
- 
-    <slot />
 
-   
-    <Footer_old footerstyle={footerstyle}/>
+
   </main>
 
 

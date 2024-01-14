@@ -1,10 +1,6 @@
 ---
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import Preloader from "../components/Preloader.astro";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import '../styles/global.scss';
-import MainImgButton from "../components/MainImgButton.astro";
 ---
 
 
@@ -24,38 +20,10 @@ import MainImgButton from "../components/MainImgButton.astro";
     </head>
 
 <body>
-	<Preloader/>
-
-	<main class="allcontent">
-		<Header/>
-
-		<div id="swup" class="gridwrapper">
-			<div class="container">
-				<MainImgButton
-					imagePath="/src/images/hand.jpg"
-					altText="testin"
-					url="/art"
-					buttontext=ART
-					theme="art"
-				/>
-				<MainImgButton
-					imagePath="/src/images/magritte-sketch.jpg"
-					altText="testin"
-					url="/architecture"
-					buttontext=ARCHITECTURE
-					theme="architecture"
-				/>
-				<MainImgButton
-					imagePath="/src/images/Lion.jpg"
-					altText="testin"
-					url="/travel"
-					buttontext=travel
-					theme="travel"
-				/>
-			</div>
-			<Footer/>
-		</div>
-	</main>
+	<slot/>
+    <script>
+        import "../scripts/Testing.js"
+    </script>
 </body>
 
 </html>

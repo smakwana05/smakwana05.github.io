@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro.jsx';
+import Greeting from '../components/Greeting.jsx';
+const pageTitle = "Home Page";
+const headerstyle = "";
+const footerstyle = "";
+---
+<BaseLayout pageTitle={pageTitle} headerstyle={headerstyle} footerstyle={footerstyle}>
+  <h2>My awesome blog subtitle</h2>
+  <Greeting client:load messages={["Hi", "Hello", "Howdy", "Hey there"]} />
+  <script>
+   
+  </script>
+</BaseLayout>

@@ -1,0 +1,10 @@
+---
+import Social from './Social.astro';
+const {footerstyle} = Astro.props;
+---
+
+<footer class={footerstyle}>
+  <Social platform="twitter" username="astrodotbuild" />
+  <Social platform="github" username="withastro" />
+  <Social platform="youtube" username="astrodotbuild" />
+</footer>

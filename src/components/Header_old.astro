@@ -1,0 +1,13 @@
+---
+import Navigation from './Navigation.astro';
+import Hamburger from './Hamburger.astro';
+const {headerstyle} = Astro.props;
+
+---
+
+<header class={headerstyle}>
+    <nav>
+        <Hamburger />
+        <Navigation/>
+    </nav>
+</header>
