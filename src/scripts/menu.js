@@ -4,7 +4,6 @@ import SwupScriptsPlugin from '@swup/scripts-plugin';
 import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupA11yPlugin from '@swup/a11y-plugin';
 import { Fancybox } from "@fancyapps/ui";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import imagesLoaded from 'imagesloaded';
 
 let scrollposition = 0;

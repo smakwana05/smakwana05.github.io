@@ -1,3 +1,5 @@
+import { Fancybox } from "@fancyapps/ui";
+
 const options = {
     root: null,
     rootMargin: '0px 0px 300px 0px',
@@ -69,3 +71,10 @@ function test() {
 // document.addEventListener("DOMContentLoaded", (event) => {
   test();
 // })
+
+
+
+Fancybox.bind("[data-fancybox]", {
+  Hash: false,
+  placeFocusBack: false,
+});

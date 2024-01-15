@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/images/*.{jpeg,jpg,png,gif}');
+const { imagePath, altText } = Astro.props; 
+const {url} = Astro.props;
+const {theme} = Astro.props;
+const {datasrc} = Astro.props;
+
+
+if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "/src/images/*.{jpeg,jpg,png,gif}"`);
+---
+
+<button tabindex="-1" class="item2">
+    <a href={url} class={"buttontext " + theme} data-fancybox="gallery" data-src={imagePath.replace('/src/images', '')}>
+        <Image loading='eager' tabindex="-1" src={images[imagePath]()} alt={altText}/>
+    </a>   
+</button>
+
+

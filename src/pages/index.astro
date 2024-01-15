@@ -1,62 +1,44 @@
 ---
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import Preloader from "../components/Preloader.astro";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
-import '../styles/global.scss';
-import MainImgButton from "../components/MainImgButton.astro";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import Preloader from "@components/Preloader.astro";
+import MainImgButton from "@components/MainImgButton.astro";
+import HtmlBody from "@layouts/HtmlBody.astro";
 ---
 
 
 
-<html lang="en">
-    <head>
-        <title>Suraj Makwana</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Suraj Makwana">
-        <link rel="stylesheet" href="https://use.typekit.net/tke2dxb.css">
-        <noscript><link rel="stylesheet" href="css/NOSCRIPT.css" />
-        <div class="noscript">Javascript is required for full functionality of the site. Please enable Javascript otherwise some links or buttons may not function as intended.</div>
-        </noscript>
-        <script src="https://kit.fontawesome.com/297e22bac0.js" crossorigin="anonymous"></script>
-    </head>
-
-<body>
+<HtmlBody>
 	<Preloader/>
 
 	<main class="allcontent">
-		<Header/>
+		<Header headerclass="header"/>
 
 		<div id="swup" class="gridwrapper">
 			<div class="container">
 				<MainImgButton
-					imagePath="/src/images/hand.jpg"
+					imagePath="/src/images/Menu_Art.jpg"
 					altText="testin"
-					url="/art"
-					buttontext=ART
+					url="/art-design"
+					buttontext="ART / DESIGN"
 					theme="art"
 				/>
 				<MainImgButton
-					imagePath="/src/images/magritte-sketch.jpg"
+					imagePath="/src/images/Menu_Architecture.jpg"
 					altText="testin"
 					url="/architecture"
-					buttontext=ARCHITECTURE
+					buttontext="ARCHITECTURE"
 					theme="architecture"
 				/>
 				<MainImgButton
-					imagePath="/src/images/Lion.jpg"
+					imagePath="/src/images/travel.jpg"
 					altText="testin"
 					url="/travel"
-					buttontext=travel
+					buttontext="travel"
 					theme="travel"
 				/>
 			</div>
 			<Footer/>
 		</div>
 	</main>
-
-</body>
-
-</html>
+</HtmlBody>
