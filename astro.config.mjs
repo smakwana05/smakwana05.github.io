@@ -3,15 +3,16 @@ import { defineConfig } from 'astro/config';
 import preact from "@astrojs/preact";
 // import Swup from 'swup';
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    preact(), 
-    // swup({
-    //   globalInstance: true,
-    //   animateHistoryBrowsing: true,
-    //   native: true,
-    //   skipPopStateHandling: (event) => event.state?.source !== 'swup'
-    // }),
-  ]
+  integrations: [preact()
+  // swup({
+  //   globalInstance: true,
+  //   animateHistoryBrowsing: true,
+  //   native: true,
+  //   skipPopStateHandling: (event) => event.state?.source !== 'swup'
+  // }),
+  , react()]
 });

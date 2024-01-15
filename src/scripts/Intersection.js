@@ -19,13 +19,8 @@ function test() {
         const imagePosition = image.getBoundingClientRect().top;
         // console.log(imagePosition);
         if (imagePosition > windowHeight) { 
-          console.log(image.src);
-          image.setAttribute('data-src', image.src);
-        //   console.log("this is outside view");
-          // console.log(image.src);
-          // If the image is below the fold, change src to data-src
-  
-          // image.removeAttribute('src');
+          image.classList.add("hide");
+          // image.setAttribute('data-src', image.src);
         }
       });
   
@@ -34,7 +29,7 @@ function test() {
     initialImageLoad();
   
     function imageLazyLoad() {
-      const images = Array.from(document.querySelectorAll('img[data-src]'));
+      const images = Array.from(document.querySelectorAll('img[src]'));
   
       if (images.length) {
         if ('IntersectionObserver' in window) {
@@ -64,15 +59,13 @@ function test() {
     }
   
     function loadImage(image) {
-      image.setAttribute('src', image.getAttribute('data-src'));
-      image.onload = () => {
-        image.removeAttribute('data-src');
-        // msnry.layout();
-      }
+      image.classList.remove("hide");
+      // image.setAttribute('src', image.getAttribute('data-src'));
+   
     }
     imageLazyLoad();
 };
 
-document.addEventListener("DOMContentLoaded", (event) => {
+// document.addEventListener("DOMContentLoaded", (event) => {
   test();
-})
+// })
