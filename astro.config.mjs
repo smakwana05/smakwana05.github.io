@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://smakwana05.github.io',
-  base: './',
+  // base: '/',
 
   integrations: [
     // preact()
