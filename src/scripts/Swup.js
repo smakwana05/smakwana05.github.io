@@ -4,6 +4,8 @@ import SwupScriptsPlugin from '@swup/scripts-plugin';
 import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupA11yPlugin from '@swup/a11y-plugin';
 import imagesLoaded from 'imagesloaded';
+import { gsap } from "gsap";
+
 
 
 const images = (document.querySelectorAll('img'));
@@ -23,58 +25,22 @@ const swup = new Swup({
   });
   
 
-
-
-
-
-
-
-
-
-
-
-
-// swup.hooks.on('content:replace', async () => {
-//   document.querySelector('.gridwrapper').style.opacity = 0;
-//     // await testing();
-//     // await imagesLoaded( document.querySelector('.gridwrapper'), function( instance ) {
-//     //   console.log('all images are loaded');
-//     // });
-//  });
-
-//  swup.hooks.on('content:replace', async () => {
-
-//     await imagesLoaded( document.querySelectorAll('.gridwrapper'), function( instance ) {
-//       // document.querySelector('.gridwrapper').style.opacity = 1;
-//       console.log('all images are loaded');
-//     });
-//  });
-
-  // async function checkAllImagesLoaded() {
-  //   if (swupcontainer !== null) {
-  //     const images = document.querySelectorAll('img[loading="eager"]');
-  //     const promises = Array.from(images).map(image => {
-  //       return new Promise((resolve, reject) => {
-  //         if (image.complete) {
-  //           resolve();
-  //         } else {
-  //           image.addEventListener('load', resolve);
-  //           image.addEventListener('error', reject);
-  //         }
-  //       });
-  //     });
+swup.hooks.replace('animation:out:await', async () => {
+   await gsap.to('.transition-fade', { autoAlpha: 0, duration: 0.25 });
+});
   
-  //     try {
-  //       await Promise.all(promises);
-  //       console.log('All images loaded within the container');
-  //     } catch (error) {
-  //       console.error('An image failed to load');
-  //     }
-  //   } 
-  //   else {
-  //     console.error('Invalid container element');
-  //   }
-  // }
+ swup.hooks.replace('animation:in:await', async () => {
+  gsap.set('.transition-fade', { autoAlpha: 0 })
+
+  await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
+    console.log('imageslode');
+    gsap.to('.transition-fade', { autoAlpha: 1 });
+  });
+},{priority: -100});
+
+
+
+
   
   // swup.hooks.on('page:view', async (swupcontainer) => {
   //   await checkAllImagesLoaded(swupcontainer);
@@ -82,15 +48,3 @@ const swup = new Swup({
 
 
   
-  // function testing() {
-  //   if (document.querySelectorAll('img[loading="eager"]') !== null) {
-  //     const images = document.querySelectorAll('img[loading="eager"]');
-  //     const arrayimg = Array.from(images);
-  //     console.log(arrayimg);
-
-  //   }
-
-  // }
-
-
-
