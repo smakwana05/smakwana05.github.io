@@ -1,6 +1,7 @@
 ---
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import '../styles/global.scss';
+import Preloader from "@components/Preloader.astro";
 ---
 
 
@@ -13,14 +14,20 @@ import '../styles/global.scss';
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Suraj Makwana">
         <link rel="stylesheet" href="https://use.typekit.net/tke2dxb.css">
-        <noscript><link rel="stylesheet" href="css/NOSCRIPT.css" />
+        <!-- <noscript><link rel="stylesheet" href="css/NOSCRIPT.css" />
         <div class="noscript">Javascript is required for full functionality of the site. Please enable Javascript otherwise some links or buttons may not function as intended.</div>
-        </noscript>
+        </noscript> -->
         <script src="https://kit.fontawesome.com/297e22bac0.js" crossorigin="anonymous"></script>
     </head>
 
 <body>
-	<slot/>
+    <!-- <Preloader/> -->
+        
+        <slot/>
+
+    <script>
+        import "../scripts/Swup.js"
+    </script>
 </body>
 
 </html>

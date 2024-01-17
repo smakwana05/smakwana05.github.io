@@ -1,7 +1,6 @@
 ---
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
-import Preloader from "@components/Preloader.astro";
 import MainImgButton from "@components/MainImgButton.astro";
 import HtmlBody from "@layouts/HtmlBody.astro";
 ---
@@ -9,12 +8,11 @@ import HtmlBody from "@layouts/HtmlBody.astro";
 
 
 <HtmlBody>
-	<Preloader/>
 
 	<main class="allcontent">
 		<Header headerclass="header"/>
 
-		<div id="swup" class="gridwrapper">
+		<div id="swup" class="gridwrapper transition-fade">
 			<div class="container">
 				<MainImgButton
 					imagePath="/src/images/Menu_Art.jpg"
@@ -40,5 +38,11 @@ import HtmlBody from "@layouts/HtmlBody.astro";
 			</div>
 			<Footer/>
 		</div>
+			
+		<script>
+			import "../scripts/Swup.js"
+		</script>
 	</main>
+
+
 </HtmlBody>
