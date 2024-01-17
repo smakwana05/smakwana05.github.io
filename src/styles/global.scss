@@ -194,10 +194,11 @@ a {
 	transition: transform 300ms;
 	will-change: transform;
 	place-items: center;
-
+	
 		&.shrink {
 			transform: translateY(-50%);
 		}
+		
 }
 
 .header.shrink-less {
@@ -845,6 +846,7 @@ html {
 	bottom: auto;
 	width: 100%;
 	font-size: calc(1.6rem + 1vw); //29px
+	
 }
 
 
@@ -855,6 +857,8 @@ html {
 	transform: initial;
 	will-change: initial;
 	align-items: center;
+	&:focus { outline: none; } 
+
 
 	&.shrink{
 		transform: initial;
@@ -905,6 +909,7 @@ html {
 
 .allcontent {
 	height: initial;
+	&:focus { outline: none; } 
 }
 
 .fancybox__nav {
