@@ -7,8 +7,10 @@ import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 
 
-
-const images = (document.querySelectorAll('img'));
+var preloader = document.querySelector(".preloader");
+const allcontent = document.querySelector(".allcontent");
+const images = document.querySelectorAll('img');
+const header = document.querySelector('.header');
 var swupcontainer = document.querySelectorAll('#swup');
 
 
@@ -23,23 +25,64 @@ const swup = new Swup({
       new SwupA11yPlugin(),
     ]
   });
-  
+
+// gsap.to(preloader, {autoAlpha: 1, duration: 0.25, delay: 0.35 });   
+
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.to(preloader, {autoAlpha: 0});
+  allcontent.style.opacity = "1"
+});
+
+swup.hooks.on('visit:start', (visit) => {
+  if (
+    visit.to.url.includes('life-drawing')||
+    visit.to.url.includes('school')||
+    visit.to.url.includes('architecture')||
+    visit.to.url.includes('travel')
+  ) {
+    header.classList.add("shrink");
+  } else {
+    header.classList.remove("shrink");
+  }
+});
+
+let preloaderTimeout;
+
+swup.hooks.on('animation:out:start', () => {
+  // {gsap.to(preloader, {autoAlpha: 1, duration: 0.25 }) }  
+  preloaderTimeout = setTimeout(() => {
+    gsap.to(preloader, {autoAlpha: 1, duration: 0.25 });
+  }, 300);
+});
 
 swup.hooks.replace('animation:out:await', async () => {
-   await gsap.to('.transition-fade', { autoAlpha: 0, duration: 0.25 });
+   await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
 });
-  
- swup.hooks.replace('animation:in:await', async () => {
-  gsap.set('.transition-fade', { autoAlpha: 0 })
+
+swup.hooks.replace('animation:in:await', async () => {
+  gsap.set('.gridwrapper', { autoAlpha: 0 })
 
   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
-    console.log('imageslode');
-    gsap.to('.transition-fade', { autoAlpha: 1 });
+    // console.log('imageslode');
+    clearTimeout(preloaderTimeout);
+
+    gsap.to(preloader, {autoAlpha: 0});
+    gsap.to('.gridwrapper', { autoAlpha: 1, duration: 0.5 });
   });
 },{priority: -100});
 
 
 
+
+
+
+// swup.hooks.before('animation:out:start', () => {
+//   setTimeout(function() {gsap.to(preloader, {autoAlpha: 1, duration: 0.25 }) }, 10);  
+// });
+
+// swup.hooks.on('visit:end',  () => {
+//    gsap.to(preloader, {autoAlpha: 0, duration: 0.05});
+// });
 
   
   // swup.hooks.on('page:view', async (swupcontainer) => {

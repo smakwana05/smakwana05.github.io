@@ -13,7 +13,7 @@ function test() {
       const windowHeight = window.innerHeight;
   
       // console.log(windowHeight);
-      console.log(images);
+      // console.log(images);
     
   
       images.forEach(image => {
@@ -21,7 +21,10 @@ function test() {
         const imagePosition = image.getBoundingClientRect().top;
         // console.log(imagePosition);
         if (imagePosition > windowHeight) { 
+          console.log("outsideview");
           image.classList.add("hide");
+          // image.loading = "lazy";
+          image.decoding = "async";
           // image.setAttribute('data-src', image.src);
         }
       });
@@ -77,4 +80,19 @@ function test() {
 Fancybox.bind("[data-fancybox]", {
   Hash: false,
   placeFocusBack: false,
+  Images: {
+    protected: true,
+    zoom: false,
+  },
+  Toolbar: {
+    display: {
+      left: ["none"],
+      right: ["close"],
+    },
+  },
+  placeFocusBack: false,
+  Thumbs: false,  
+  showClass: "fadeonly",
+  hideClass: "fadeoutonly",
+  
 });

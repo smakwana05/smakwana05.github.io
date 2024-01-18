@@ -6,6 +6,7 @@
 	--black: rgb(0, 0, 0);
 	--focusoutline: rgb(0, 0, 0);
 	--background: var(--white);
+	--mainborderrad: 4px;
 
 	--almostblack: rgb(20, 20, 20);
 	--darkestgrey: rgb(40,40,40); //menu link colour
@@ -127,9 +128,10 @@ body {
 }
 
 .allcontent {
-	opacity: 1;
+	opacity: 0;
 	position: absolute;
 	width: 100%;
+	transition: 0.4s;
 	// height: min-content;
 	// margin-bottom: -15svh;
 	// padding: 0;	
@@ -159,7 +161,7 @@ a {
 	z-index: 3;
 	// visibility: hidden;
 	transition: 0.05s;
-  display: none;
+//   display: none;
 }
 
 .circlespin {
@@ -443,7 +445,7 @@ a {
 	aspect-ratio: 1 / 1;
 	contain: paint;
 	overflow: hidden;	
-	border-radius: 8px;
+	border-radius: var(--mainborderrad);
 	filter: var(--darkmodeimage);
 	// place-items: center;
 	
@@ -543,7 +545,7 @@ a {
 	position: relative;
 	width: 100%;
 	margin-bottom: 2px;
-	border-radius: 8px;
+	border-radius: var(--mainborderrad);
 	transition: 0.3s;
 	filter: var(--darkmodeimage);
 
@@ -557,7 +559,7 @@ a {
 		visibility: hidden;
 		opacity: 0;
 		transition: 0.3s;
-		border-radius: 8px;
+		border-radius: var(--mainborderrad);
 	}
 	
 	a:hover::after, a:focus-within::after {
@@ -582,7 +584,7 @@ a {
 		height: 100%;
 		transition: 0.25s;
 		opacity: 1;
-		border-radius: 8px;	
+		border-radius: var(--mainborderrad);	
 
 		&.hide {
 			visibility: hidden;
