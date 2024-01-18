@@ -6,7 +6,7 @@
 	--black: rgb(0, 0, 0);
 	--focusoutline: rgb(0, 0, 0);
 	--background: var(--white);
-	--mainborderrad: 4px;
+	--mainborderrad: 8px;
 
 	--almostblack: rgb(20, 20, 20);
 	--darkestgrey: rgb(40,40,40); //menu link colour
@@ -159,9 +159,16 @@ a {
 	top: 45%;
 	justify-content: center;
 	z-index: 3;
+	// opacity: 1;
 	// visibility: hidden;
+	// visibility: visible;
 	transition: 0.05s;
 //   display: none;
+
+	&.hidden {
+		opacity: 0;
+		visibility: hidden;
+	}
 }
 
 .circlespin {
