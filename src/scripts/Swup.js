@@ -32,7 +32,8 @@ const swup = new Swup({
 // gsap.set(preloader, {autoAlpha: 1});
 
 document.addEventListener('DOMContentLoaded', () => {
-  gsap.to(preloader, {autoAlpha: 0});
+  // gsap.to(preloader, {autoAlpha: 0});
+  // preloader.classList.add('hidden');
   allcontent.style.opacity = "1"
 });
 
@@ -51,18 +52,19 @@ swup.hooks.on('visit:start', (visit) => {
 
 let preloaderTimeout;
 
-document.addEventListener('swup:animation:out:start', ({ detail: { visit } }) => {
-  // setTimeout(() => {
-    gsap.to(preloader, {autoAlpha: 1});
-  // }, 20);
-});
+// document.addEventListener('swup:animation:out:start', ({ detail: { visit } }) => {
+//   // setTimeout(() => {
+//     gsap.to(preloader, {autoAlpha: 1});
+//   // }, 20);
+//   // preloader.classList.remove('hidden')
+// });
 
-document.addEventListener('swup:animation:in:end', ({ detail: { visit } }) => {
-  imagesLoaded(allcontent, function (instance) {
-    // preloader.classList.add('hidden')
-    gsap.to(preloader,{autoAlpha: 0});
-  });
-});
+// document.addEventListener('swup:animation:in:end', ({ detail: { visit } }) => {
+//   imagesLoaded(allcontent, function (instance) {
+//     // preloader.classList.add('hidden')
+//     gsap.to(preloader,{autoAlpha: 0});
+//   });
+// });
 
 
 

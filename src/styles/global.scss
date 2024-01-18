@@ -158,11 +158,11 @@ a {
 	position: fixed;
 	top: 45%;
 	justify-content: center;
-	z-index: 3;
+	z-index: 10;
 	// opacity: 1;
-	// visibility: hidden;
+	visibility: hidden;
 	// visibility: visible;
-	transition: 0.05s;
+	transition: 0.15s;
 //   display: none;
 
 	&.hidden {
