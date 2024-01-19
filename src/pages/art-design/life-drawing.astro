@@ -9,13 +9,10 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 
 
-<HtmlBody>
+<HtmlBody  headerclass="header shrink">
 
 
-<div class="allcontent">
-	<Header headerclass="header shrink"/>
-
-	<div id="swup" class="gridwrapper shrink transition-fade">
+	<div id="swup" data-barba="container" data-barba-namespace="masonry" class="gridwrapper shrink">
 		<div class="columns test">
 
 		<GalleryImage
@@ -96,7 +93,6 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 		<Footer/>
 	</div>
 
-</main>
 <script>
 	import "../../scripts/Intersection.js"
 </script>

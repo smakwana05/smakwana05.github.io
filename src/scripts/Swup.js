@@ -4,6 +4,7 @@ import SwupScriptsPlugin from '@swup/scripts-plugin';
 import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupA11yPlugin from '@swup/a11y-plugin';
 import SwupDebugPlugin from '@swup/debug-plugin';
+import SwupProgressPlugin from '@swup/progress-plugin';
 import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 
@@ -24,7 +25,7 @@ const swup = new Swup({
       new SwupScriptsPlugin(),
       new SwupPreloadPlugin(),
       new SwupA11yPlugin(),
-      new SwupDebugPlugin(),
+      // new SwupDebugPlugin(),
     ]
   });
 
@@ -52,6 +53,47 @@ swup.hooks.on('visit:start', (visit) => {
 
 let preloaderTimeout;
 
+
+
+swup.hooks.replace('animation:out:await', async () => {
+   await gsap.to('.gridwrapper', { opacity: 0, duration: 0.25 });
+});
+
+swup.hooks.replace('animation:in:await', async () => {
+  gsap.set('.gridwrapper', { opacity: 0 })
+
+  // preloaderTimeout = setTimeout(() => {
+  //   gsap.to(preloader, { autoAlpha: 1, duration: 0.1 });
+  // }, 40); 
+
+  await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
+    clearTimeout(preloaderTimeout);
+    gsap.to('.gridwrapper', { opacity: 1 });
+  });
+},{priority: -100});
+
+
+
+// swup.hooks.on('animation:in:end', async () => {
+//   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
+//     gsap.to(preloader, { autoAlpha: 0 });
+//   });
+// });
+
+
+
+// swup.hooks.on('animation:out:start', async () => {
+//   preloaderTimeout = setTimeout(() => {
+//     gsap.to(preloader, { autoAlpha: 1, duration: 0.05 });
+//   }, ); // Replace YOUR_DELAY with the delay you want in milliseconds
+// });
+
+
+
+
+
+
+
 // document.addEventListener('swup:animation:out:start', ({ detail: { visit } }) => {
 //   // setTimeout(() => {
 //     gsap.to(preloader, {autoAlpha: 1});
@@ -75,22 +117,10 @@ let preloaderTimeout;
 //   }, 260);
 // });
 
-swup.hooks.replace('animation:out:await', async () => {
-   await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
-});
 
-swup.hooks.replace('animation:in:await', async () => {
-  gsap.set('.gridwrapper', { autoAlpha: 0 })
 
-  await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
-    // console.log('imageslode');
-    // clearTimeout(preloaderTimeout);
 
-    // gsap.to(preloader, {autoAlpha: 0});
 
-    gsap.to('.gridwrapper', { autoAlpha: 1 });
-  });
-},{priority: -100});
 
 
 

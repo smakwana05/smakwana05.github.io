@@ -2,6 +2,9 @@
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import '../styles/global.scss';
 import Preloader from "@components/Preloader.astro";
+import Header from "@components/Header.astro";
+
+const {headerclass} = Astro.props
 ---
 
 
@@ -22,12 +25,16 @@ import Preloader from "@components/Preloader.astro";
 
 <body>
     <Preloader/>
-        
+    
+    <div class="allcontent" data-barba="wrapper">
+        <Header headerclass={headerclass}/>
         <slot />
+    </div>
 
-    <script>
-        import "../scripts/Swup.js"
-    </script>
+    
+<script>
+    import "../scripts/barba.js"
+</script>
 </body>
 
 </html>

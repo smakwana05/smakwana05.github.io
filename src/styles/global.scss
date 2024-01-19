@@ -6,7 +6,7 @@
 	--black: rgb(0, 0, 0);
 	--focusoutline: rgb(0, 0, 0);
 	--background: var(--white);
-	--mainborderrad: 8px;
+	--mainborderrad: 0.5rem;
 
 	--almostblack: rgb(20, 20, 20);
 	--darkestgrey: rgb(40,40,40); //menu link colour
@@ -128,7 +128,7 @@ body {
 }
 
 .allcontent {
-	opacity: 0;
+	opacity: 1;
 	position: absolute;
 	width: 100%;
 	transition: 0.4s;
@@ -162,7 +162,7 @@ a {
 	// opacity: 1;
 	visibility: hidden;
 	// visibility: visible;
-	transition: 0.15s;
+	transition: 0.05s;
 //   display: none;
 
 	&.hidden {

@@ -7,12 +7,10 @@ import HtmlBody from "@layouts/HtmlBody.astro";
 
 
 
-<HtmlBody>
+<HtmlBody headerclass="header">
 
-	<div class="allcontent">
-		<Header headerclass="header"/>
 
-		<div id="swup" class="gridwrapper transition-fade">
+		<div data-barba="container" data-barba-namespace="home" class="gridwrapper">
 			<div class="container">
 				<MainImgButton
 					imagePath="/src/images/Menu_Art.jpg"
@@ -38,11 +36,7 @@ import HtmlBody from "@layouts/HtmlBody.astro";
 			</div>
 			<Footer/>
 		</div>
-			
-		<script>
-			import "../scripts/Swup.js"
-		</script>
-	</main>
+
 
 
 </HtmlBody>

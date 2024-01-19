@@ -1,19 +1,13 @@
 ---
 import HtmlBody from "@layouts/HtmlBody.astro";
 import Footer from "@components/Footer.astro";
-import Header from "@components/Header.astro";
 import MainImgButton from "@components/MainImgButton.astro";
 ---
 
 
 
-<HtmlBody>
-
-
-<div class="allcontent">
-	<Header headerclass="header shrink"/>
-
-	<div id="swup" class="gridwrapper shrink">
+<HtmlBody headerclass="header shrink">
+	<div id="swup" data-barba="container" data-barba-namespace="architecture" class="gridwrapper shrink">
 		<div class="container">
 			<MainImgButton
 				imagePath="/src/images/Life drawing_B.jpg"
@@ -88,8 +82,5 @@ import MainImgButton from "@components/MainImgButton.astro";
 		</div>
 		<Footer/>
 	</div>
-</main>
-
-
 
 </HtmlBody>
