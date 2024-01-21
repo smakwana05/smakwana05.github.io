@@ -8,15 +8,11 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 ---
 
 
+<HtmlBody  headerclass="header shrink">
 
-<HtmlBody>
 
-
-<div class="allcontent">
-	<Header headerclass="header shrink"/>
-
-	<div id="swup" class="gridwrapper shrink transition-fade">
-		<div class="columns test">
+	<div id="swup" data-barba="container" data-barba-namespace="blank" class="gridwrapper shrink">
+		<div class="columns test" style="visibility: hidden;">
 
 		<GalleryImage
 		imagePath="/src/images/DSC08528.jpg"
@@ -96,8 +92,16 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 		<Footer/>
 	</div>
 
-</main>
 <script>
-	import "../../scripts/Intersection.js"
 </script>
 </HtmlBody>
+
+
+<!-- <HtmlBody  headerclass="header shrink">
+
+
+	<div id="swup" data-barba="container" data-barba-namespace="blank" class="gridwrapper shrink">
+	
+	</div>
+
+</HtmlBody> -->

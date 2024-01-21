@@ -76,23 +76,3 @@ function test() {
 // })
 
 
-
-Fancybox.bind("[data-fancybox]", {
-  Hash: false,
-  placeFocusBack: false,
-  Images: {
-    protected: true,
-    zoom: false,
-  },
-  Toolbar: {
-    display: {
-      left: ["none"],
-      right: ["close"],
-    },
-  },
-  placeFocusBack: false,
-  Thumbs: false,  
-  showClass: "fadeonly",
-  hideClass: "fadeoutonly",
-  
-});

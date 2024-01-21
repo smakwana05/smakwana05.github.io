@@ -3,42 +3,118 @@ import SwupHeadPlugin from '@swup/head-plugin';
 import SwupScriptsPlugin from '@swup/scripts-plugin';
 import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupA11yPlugin from '@swup/a11y-plugin';
-import SwupDebugPlugin from '@swup/debug-plugin';
-import SwupProgressPlugin from '@swup/progress-plugin';
 import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
+import { Fancybox } from "@fancyapps/ui";
 
 
 var preloader = document.querySelector(".preloader");
 const allcontent = document.querySelector(".allcontent");
-const images = document.querySelectorAll('img');
 const header = document.querySelector('.header');
-var swupcontainer = document.querySelectorAll('#swup');
 
+var preloaderOnce = document.querySelector(".preloader-onceload");
+let scrollposition = 0;
 
+//SWUP
 const swup = new Swup({
-    animateHistoryBrowsing: true,
-    containers: ["#swup"],
-    timeout: 7000,
-    plugins: [
-      new SwupHeadPlugin(),
-      new SwupScriptsPlugin(),
-      new SwupPreloadPlugin(),
-      new SwupA11yPlugin(),
-      // new SwupDebugPlugin(),
-    ]
-  });
-
-// gsap.to(preloader, {autoAlpha: 1, duration: 0.25, delay: 0.35 });   
-// gsap.set(preloader, {autoAlpha: 1});
-
-document.addEventListener('DOMContentLoaded', () => {
-  // gsap.to(preloader, {autoAlpha: 0});
-  // preloader.classList.add('hidden');
-  allcontent.style.opacity = "1"
+  animateHistoryBrowsing: true,
+  containers: ["#swup"],
+  timeout: 7000,
+  plugins: [
+    new SwupHeadPlugin(),
+    new SwupScriptsPlugin(),
+    new SwupPreloadPlugin(),
+    new SwupA11yPlugin(),
+  ]
 });
 
+//FANCYBOX
+function fancyboxinstance() {
+  if(document.querySelectorAll("[data-fancybox]") !== null) {
+  
+    let timer;
+      window.addEventListener('popstate', function() {
+        clearTimeout(timer); 
+      });
+
+    Fancybox.bind("[data-fancybox]", {
+      Hash: false,
+      Images: {
+        protected: true,
+        zoom: false,
+      },
+      Toolbar: {
+        display: {
+          left: ["none"],
+          right: ["close"],
+        },
+      },
+      placeFocusBack: false,
+      Thumbs: false,  
+      showClass: "fadeonly",
+      hideClass: "fadeoutonly",
+      on: {
+        "init": (fb) => { 
+            console.log("init");
+        },
+
+        "close": (fb) => {
+            console.log("close");  
+            const indexonclose = fb.getSlide().index;
+            localStorage.setItem("closedFBindex", indexonclose);
+            timer = setTimeout(function() {
+              history.back(); // go back after a delay if no popstate event has occurred
+            }, 5); 
+        },
+      },
+
+    });
+  }
+}
+
+//FANCYBOX HISTORY
+function fancyboxOpening(visit) {
+  if(visit.from.url.includes('gallery')) {
+    Fancybox.close();
+    visit.animation.animate = false;
+  }
+
+  if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
+    const lastslide = localStorage.getItem("closedFBindex");
+    visit.animation.animate = false;
+    Fancybox.fromSelector('[data-fancybox]', {
+      startIndex: lastslide,
+    });
+  }
+
+  fancyboxinstance(); 
+}
+
+
+
+
+//ONCE DOMCONTENT
+document.addEventListener('DOMContentLoaded', () => {
+  fancyboxinstance();
+  imagesLoaded(allcontent, function (instance) {
+    gsap.to(preloaderOnce, {autoAlpha: 0});
+    preloaderOnce.style.display = "none";
+    gsap.to('.allcontent', { opacity: 1 });
+
+    if (window.location.href.includes("gallery")) {
+      Fancybox.fromSelector('[data-fancybox]', {
+      });
+    }
+  });
+});
+
+let preloaderTimeout;
+
+//VISIT START
 swup.hooks.on('visit:start', (visit) => {
+
+  fancyboxOpening(visit);
+
   if (
     visit.to.url.includes('life-drawing')||
     visit.to.url.includes('school')||
@@ -48,97 +124,58 @@ swup.hooks.on('visit:start', (visit) => {
     header.classList.add("shrink");
   } else {
     header.classList.remove("shrink");
+  };
+
+  if(visit.to.url.includes('gallery')) {
+    scrollposition = window.scrollY;
   }
-});
+  else {
+    window.scrollTo(0,0);
+  };
 
-let preloaderTimeout;
+  if(!visit.from.url.includes('gallery')) {
+    preloaderTimeout = setTimeout(() => {
+      gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
+    }, 300); 
+  };
+
+}, {priority: 100});
 
 
 
+
+
+//ANIMATION OUT AWAIT
 swup.hooks.replace('animation:out:await', async () => {
-   await gsap.to('.gridwrapper', { opacity: 0, duration: 0.25 });
+   await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
 });
 
+
+//ANIMATION IN AWAIT
 swup.hooks.replace('animation:in:await', async () => {
   gsap.set('.gridwrapper', { opacity: 0 })
 
-  // preloaderTimeout = setTimeout(() => {
-  //   gsap.to(preloader, { autoAlpha: 1, duration: 0.1 });
-  // }, 40); 
 
   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
     clearTimeout(preloaderTimeout);
+    gsap.to(preloader, { autoAlpha: 0 });
     gsap.to('.gridwrapper', { opacity: 1 });
   });
+
+
 },{priority: -100});
 
 
 
-// swup.hooks.on('animation:in:end', async () => {
-//   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
-//     gsap.to(preloader, { autoAlpha: 0 });
-//   });
-// });
 
 
+swup.hooks.on('visit:end', (visit) => {
+  if(visit.from.url.includes('gallery')) {
+   window.scrollTo(0, scrollposition);
+   gsap.to(preloader, { autoAlpha: 0 });
+  }
 
-// swup.hooks.on('animation:out:start', async () => {
-//   preloaderTimeout = setTimeout(() => {
-//     gsap.to(preloader, { autoAlpha: 1, duration: 0.05 });
-//   }, ); // Replace YOUR_DELAY with the delay you want in milliseconds
-// });
-
-
-
-
-
-
-
-// document.addEventListener('swup:animation:out:start', ({ detail: { visit } }) => {
-//   // setTimeout(() => {
-//     gsap.to(preloader, {autoAlpha: 1});
-//   // }, 20);
-//   // preloader.classList.remove('hidden')
-// });
-
-// document.addEventListener('swup:animation:in:end', ({ detail: { visit } }) => {
-//   imagesLoaded(allcontent, function (instance) {
-//     // preloader.classList.add('hidden')
-//     gsap.to(preloader,{autoAlpha: 0});
-//   });
-// });
-
-
-
-// swup.hooks.before('animation:out:start', () => {
-//   // {gsap.to(preloader, {autoAlpha: 1, duration: 0.25 }) }  
-//   preloaderTimeout = setTimeout(() => {
-//     gsap.to(preloader, {autoAlpha: 1, duration: 0.25});
-//   }, 260);
-// });
-
-
-
-
-
-
-
-
-
-
-
-// swup.hooks.before('animation:out:start', () => {
-//   setTimeout(function() {gsap.to(preloader, {autoAlpha: 1, duration: 0.25 }) }, 10);  
-// });
-
-// swup.hooks.on('visit:end',  () => {
-//    gsap.to(preloader, {autoAlpha: 0, duration: 0.05});
-// });
-
-  
-  // swup.hooks.on('page:view', async (swupcontainer) => {
-  //   await checkAllImagesLoaded(swupcontainer);
-  // });
-
-
-  
+  if(visit.to.url.includes('gallery')) {
+    window.scrollTo(0, scrollposition);
+   }
+});
