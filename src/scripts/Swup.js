@@ -93,7 +93,11 @@ function fancyboxOpening(visit) {
 // window.addEventListener('popstate', function() {
 //   console.log("popstated");
 // });
-
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted && window.location.href.includes("gallery")) {
+    console.log('This page was restored from the bfcache from gallery');
+  }
+});
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
   fancyboxinstance();
@@ -107,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
+   
   });
 });
 
