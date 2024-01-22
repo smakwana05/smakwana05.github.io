@@ -95,7 +95,9 @@ function fancyboxOpening(visit) {
 // });
 window.addEventListener('pageshow', (event) => {
   if (event.persisted && window.location.href.includes("gallery")) {
-    console.log('This page was restored from the bfcache from gallery');
+    Fancybox.fromSelector('[data-fancybox]', {
+    });
+    // console.log('This page was restored from the bfcache from gallery');
   }
 });
 //ONCE DOMCONTENT
