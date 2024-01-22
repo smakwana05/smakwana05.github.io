@@ -114,6 +114,8 @@ swup.hooks.on('visit:start', (visit) => {
 
   fancyboxOpening(visit);
 
+
+
   if (
     visit.to.url.includes('life-drawing')||
     visit.to.url.includes('school')||
@@ -168,15 +170,10 @@ swup.hooks.replace('animation:in:await', async () => {
 
 
 
-swup.hooks.on('visit:end', async (visit) => {
+swup.hooks.on('visit:end', (visit) => {
   if(visit.from.url.includes('gallery')) {
    window.scrollTo(0, scrollposition);
-   gsap.set('.gridwrapper', { opacity: 0 })
-    await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
-      clearTimeout(preloaderTimeout);
-      gsap.to(preloader, { autoAlpha: 0 });
-      gsap.to('.gridwrapper', { opacity: 1 });
-    });
+   gsap.to(preloader, { autoAlpha: 0 });
   }
 
   if(visit.to.url.includes('gallery')) {

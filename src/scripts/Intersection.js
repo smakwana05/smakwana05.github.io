@@ -2,7 +2,7 @@ import { Fancybox } from "@fancyapps/ui";
 
 const options = {
     root: null,
-    rootMargin: '0px 0px 300px 0px',
+    rootMargin: '0px 0px 200px 0px',
     threshold: 0.5,
   }
 
@@ -24,7 +24,7 @@ function test() {
           console.log("outsideview");
           image.classList.add("hide");
           // image.loading = "lazy";
-          image.decoding = "async";
+          // image.decoding = "async";
           // image.setAttribute('data-src', image.src);
         }
       });
@@ -72,7 +72,7 @@ function test() {
 };
 
 // document.addEventListener("DOMContentLoaded", (event) => {
-  test();
+test();
 // })
 
 
