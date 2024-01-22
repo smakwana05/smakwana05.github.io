@@ -120,10 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
 let preloaderTimeout;
 
 //VISIT START
-swup.hooks.on('visit:start', (visit) => {
+swup.hooks.on('visit:start', async (visit) => {
 
   fancyboxOpening(visit);
-
+  if (window.scrollY > 30) {
+    gsap.set('.header', { autoAlpha: 0, duration: 0.15 });
+  }
   if (
     visit.to.url.includes('life-drawing')||
     visit.to.url.includes('school')||
@@ -139,7 +141,7 @@ swup.hooks.on('visit:start', (visit) => {
     scrollposition = window.scrollY;
   }
   // else {
-  //   window.scrollTo(0,0);
+  //   // window.scrollTo(0,0);
   // };
 
   if(!visit.from.url.includes('gallery')) {
@@ -157,6 +159,8 @@ swup.hooks.on('visit:start', (visit) => {
 //ANIMATION OUT AWAIT
 swup.hooks.replace('animation:out:await', async () => {
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
+
+ 
 });
 
 
@@ -164,11 +168,13 @@ swup.hooks.replace('animation:out:await', async () => {
 swup.hooks.replace('animation:in:await', async () => {
   gsap.set('.gridwrapper', { opacity: 0 })
 
-
+  
+ 
   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
     clearTimeout(preloaderTimeout);
     gsap.to(preloader, { autoAlpha: 0 });
     gsap.to('.gridwrapper', { opacity: 1 });
+    gsap.to('.header', { autoAlpha: 1 });
   });
 
 
