@@ -1,5 +1,3 @@
-import { Fancybox } from "@fancyapps/ui";
-
 const options = {
     root: null,
     rootMargin: '0px 0px 200px 0px',
@@ -11,21 +9,11 @@ function test() {
     function initialImageLoad() {
       const images = Array.from(document.querySelectorAll('img[src]'));
       const windowHeight = window.innerHeight;
-  
-      // console.log(windowHeight);
-      // console.log(images);
-    
-  
       images.forEach(image => {
-        // Get the top position of the image relative to the viewport
         const imagePosition = image.getBoundingClientRect().top;
-        // console.log(imagePosition);
         if (imagePosition > windowHeight) { 
           console.log("outsideview");
           image.classList.add("hide");
-          // image.loading = "lazy";
-          // image.decoding = "async";
-          // image.setAttribute('data-src', image.src);
         }
       });
   
@@ -65,14 +53,9 @@ function test() {
   
     function loadImage(image) {
       image.classList.remove("hide");
-      // image.setAttribute('src', image.getAttribute('data-src'));
-   
     }
     imageLazyLoad();
 };
-
-// document.addEventListener("DOMContentLoaded", (event) => {
 test();
-// })
 
 

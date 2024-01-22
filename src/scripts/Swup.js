@@ -30,7 +30,7 @@ const swup = new Swup({
 
 //FANCYBOX
 function fancyboxinstance() {
-  if(document.querySelector("[data-fancybox]") !== null) {
+  if(document.querySelectorAll("[data-fancybox]") !== null) {
   
     let timer;
       window.addEventListener('popstate', function() {
