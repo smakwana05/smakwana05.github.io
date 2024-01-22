@@ -90,11 +90,14 @@ function fancyboxOpening(visit) {
   fancyboxinstance(); 
 }
 
+// window.addEventListener('popstate', function() {
+//   console.log("popstated");
+// });
 
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
   fancyboxinstance();
-  
+ 
   imagesLoaded(allcontent, function (instance) {
     gsap.to(preloaderOnce, {autoAlpha: 0});
     preloaderOnce.style.display = "none";
@@ -128,9 +131,9 @@ swup.hooks.on('visit:start', (visit) => {
   if(visit.to.url.includes('gallery')) {
     scrollposition = window.scrollY;
   }
-  else {
-    window.scrollTo(0,0);
-  };
+  // else {
+  //   window.scrollTo(0,0);
+  // };
 
   if(!visit.from.url.includes('gallery')) {
     preloaderTimeout = setTimeout(() => {
@@ -171,6 +174,7 @@ swup.hooks.replace('animation:in:await', async () => {
 swup.hooks.on('visit:end', async (visit) => {
   if(visit.from.url.includes('gallery')) {
    window.scrollTo(0, scrollposition);
+
    gsap.set('.gridwrapper', { opacity: 0 })
     await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
       clearTimeout(preloaderTimeout);
