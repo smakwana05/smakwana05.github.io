@@ -167,7 +167,7 @@ preventRunning: true,
 debug: true,
    
 transitions: [
-  // {
+  // { 
   //   name: 'fade-once',
   //   async once(data) {  
       
