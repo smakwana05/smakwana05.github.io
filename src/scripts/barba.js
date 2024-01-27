@@ -171,7 +171,7 @@ transitions: [
     name: 'fade-once',
     async once(data) {  
       
-    data.next.container.querySelector('.container').style.height;
+    // data.next.container.querySelector('.container').style.height;
 
       fancyboxOpening(data);
       if (data.next.namespace === "blank") {
