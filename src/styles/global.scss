@@ -1268,7 +1268,7 @@ html {
 	overflow: hidden;
 	// padding-bottom: calc(29svh); //55% 26.4svh
 	padding-bottom: initial;
-	aspect-ratio: initial;
+	aspect-ratio: auto;
 
 	.overlay.travel, &:hover .overlay.travel {
 		opacity: 0.75;
