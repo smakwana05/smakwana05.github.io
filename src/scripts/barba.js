@@ -110,9 +110,6 @@ function headeradjustment(data) {
     }
 }   
 
-
-
-
 function fancyboxOpening(data) {
   if(data.next.container.querySelectorAll("[data-fancybox]") !== null) {
     let timer;
@@ -160,11 +157,6 @@ function fancyboxOpening(data) {
 
 
 
-
-
-
-
-
 if (history.scrollRestoration) {
   history.scrollRestoration = 'manual';
 }
@@ -176,39 +168,34 @@ debug: true,
 transitions: [
   {
     name: 'fade-once',
-      async once(data) {  
-        
-        fancyboxOpening(data);
-        if (data.next.namespace === "blank") {
-          Fancybox.fromSelector('[data-fancybox]', {
-          });
-        }
+    async once(data) {  
+      
+      fancyboxOpening(data);
+      if (data.next.namespace === "blank") {
+        Fancybox.fromSelector('[data-fancybox]', {
+        });
+      }
 
-        // gsap.set(preloader,{autoAlpha: 1});
-  
-        await imagesLoaded( allcontent, 
-            function (instance) {
-            gsap.to(allcontent, 
-              {autoAlpha: 1, 
-                duration: 1,
-              });
-            gsap.to(preloader,{autoAlpha: 0});
-        }); 
-  
-      },
+      // gsap.set(preloader,{autoAlpha: 1});
+
+      await imagesLoaded( allcontent, 
+          function (instance) {
+          gsap.to(allcontent, 
+            {autoAlpha: 1, 
+              duration: 1,
+            });
+          gsap.to(preloader,{autoAlpha: 0});
+      }); 
+
+    },
   },
   
   
   {
     name: "onlyfades",
-    to: { namespace: ["home", "alternate", "masonry", "architecture", "travel", 
-    "blank"
-  ] },
+    to: { namespace: ["home", "alternate", "masonry", "architecture", "travel", "blank" ]},
 
-
-
-
-  // //PRELOAD
+   //PRELOAD
     before(data) {
         headeradjustment(data)
         
@@ -266,14 +253,18 @@ transitions: [
 },
 
 
-
 ]
 });
 
-barba.hooks.once(() => {
-  test();
+barba.hooks.once((data) => {
+  console.log(data);
+    if (data.current.namespace !== "") {
+      test();
+    };
 });
 
-barba.hooks.enter(() => {
-  test();
+barba.hooks.enter((data) => {
+  if (data.next.namespace === "masonry") {
+    test();
+  };
 });
