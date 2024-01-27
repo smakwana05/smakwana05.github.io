@@ -182,7 +182,7 @@ transitions: [
 
       await imagesLoaded( allcontent, 
           function (instance) {
-          window.scrollTo(0, 0);
+          
    
           // data.next.container.querySelector('.container').style.height = "calc(100dvh - 118px)";
           gsap.to(allcontent, 
@@ -191,7 +191,7 @@ transitions: [
             });
           gsap.to(preloader,{autoAlpha: 0});
       }); 
-
+      window.scrollTo(0, 0);
     },
   },
   
