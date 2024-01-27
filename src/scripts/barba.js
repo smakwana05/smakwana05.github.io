@@ -161,7 +161,7 @@ if (history.scrollRestoration) {
   history.scrollRestoration = 'manual';
 }
 
-window.onload = function() {
+
 barba.init({
 preventRunning: true,
 debug: true,
@@ -171,6 +171,8 @@ transitions: [
     name: 'fade-once',
     async once(data) {  
       
+    data.next.container.querySelector('.container').style.height;
+
       fancyboxOpening(data);
       if (data.next.namespace === "blank") {
         Fancybox.fromSelector('[data-fancybox]', {
@@ -256,7 +258,6 @@ transitions: [
 
 ]
 });
-}
 
 barba.hooks.once((data) => {
   console.log(data);
