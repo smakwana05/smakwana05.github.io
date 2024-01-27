@@ -161,6 +161,7 @@ if (history.scrollRestoration) {
   history.scrollRestoration = 'manual';
 }
 
+window.onload = function() {
 barba.init({
 preventRunning: true,
 debug: true,
@@ -255,6 +256,7 @@ transitions: [
 
 ]
 });
+}
 
 barba.hooks.once((data) => {
   console.log(data);
