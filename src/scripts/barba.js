@@ -167,31 +167,32 @@ preventRunning: true,
 debug: true,
    
 transitions: [
-  // { 
-  //   name: 'fade-once',
-  //   async once(data) {  
+  {
+    name: 'fade-once',
+    async once(data) {  
       
-  //   // data.next.container.querySelector('.container').style.height;
+   
 
-  //     fancyboxOpening(data);
-  //     if (data.next.namespace === "blank") {
-  //       Fancybox.fromSelector('[data-fancybox]', {
-  //       });
-  //     }
+      fancyboxOpening(data);
+      if (data.next.namespace === "blank") {
+        Fancybox.fromSelector('[data-fancybox]', {
+        });
+      }
 
-  //     // gsap.set(preloader,{autoAlpha: 1});
+      // gsap.set(preloader,{autoAlpha: 1});
 
-  //     await imagesLoaded( allcontent, 
-  //         function (instance) {
-  //         gsap.to(allcontent, 
-  //           {autoAlpha: 1, 
-  //             duration: 1,
-  //           });
-  //         gsap.to(preloader,{autoAlpha: 0});
-  //     }); 
+      await imagesLoaded( allcontent, 
+          function (instance) {
+          data.next.container.querySelector('.container').style.height = "calc(100dvh - 118px)";
+          gsap.to(allcontent, 
+            {autoAlpha: 1, 
+              duration: 1,
+            });
+          gsap.to(preloader,{autoAlpha: 0});
+      }); 
 
-  //   },
-  // },
+    },
+  },
   
   
   {
