@@ -170,7 +170,7 @@ transitions: [
   {
     name: 'fade-once',
     async once(data) {  
-      
+      window.scrollTo(0, 0);
    
 
       fancyboxOpening(data);
