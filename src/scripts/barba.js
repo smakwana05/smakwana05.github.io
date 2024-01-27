@@ -21,10 +21,77 @@ var mobiletext = document.querySelector('.descriptiontext.mobile');
 const menuItems = document.querySelectorAll('.menu a');
 var hamburger = document.querySelector(".hamburgerbutton");
 
-function preloaderanimation(data){
+
+//INTERSECTIONOBSERVER
+const options = {
+  root: null,
+  rootMargin: '0px 0px 200px 0px',
+  threshold: 0.5,
+}
+
+function test() {
+
+  function initialImageLoad() {
+    const images = Array.from(document.querySelectorAll('img[src]'));
+    const windowHeight = window.innerHeight;
+    images.forEach(image => {
+      const imagePosition = image.getBoundingClientRect().top;
+      if (imagePosition > windowHeight) { 
+        console.log("outsideview");
+        image.classList.add("hide");
+        image.loading = "lazy";
+        // image.decoding = "async";
+      }
+    });
+
+  }
+  
+  initialImageLoad();
+
+  function imageLazyLoad() {
+    const images = Array.from(document.querySelectorAll('img[src]'));
+
+    if (images.length) {
+      if ('IntersectionObserver' in window) {
+        setupIntersectionObserver(images);
+      } else {
+        loadImages(images);
+      }
+    }
+  }
+
+  function setupIntersectionObserver(images) {
+    const observer = new IntersectionObserver(onIntersection, options);
+    images.forEach(image => observer.observe(image));
+  }
+
+  function onIntersection(entries, observer) {
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio >= 0.5) {
+        observer.unobserve(entry.target);
+        loadImage(entry.target);
+      }
+    });
+  }
+
+  function loadImages(images) {
+    images.forEach(loadImage);
+  }
+
+  function loadImage(image) {
+    image.classList.remove("hide");
+    console.log("REMOVEDHIDE");
+  }
+  imageLazyLoad();
+};
+
+
+
+
+function preloaderanimation(data) {
     setTimeout(function() {
       gsap.set(preloader, {autoAlpha: 1});
-    }, 20); // 500ms delay
+    }, 50); // 500ms delay
   
     imagesLoaded(data.next.container, function (instance) {
       gsap.to(preloader,{autoAlpha: 0});
@@ -94,19 +161,13 @@ function fancyboxOpening(data) {
 
 
 
+
+
+
+
 if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
+  history.scrollRestoration = 'manual';
 }
-
-
-
-
-
-
-
-
-
-
 
 barba.init({
 preventRunning: true,
@@ -116,6 +177,7 @@ transitions: [
   {
     name: 'fade-once',
       async once(data) {  
+        
         fancyboxOpening(data);
         if (data.next.namespace === "blank") {
           Fancybox.fromSelector('[data-fancybox]', {
@@ -128,7 +190,7 @@ transitions: [
             function (instance) {
             gsap.to(allcontent, 
               {autoAlpha: 1, 
-                duration: 0.3,
+                duration: 1,
               });
             gsap.to(preloader,{autoAlpha: 0});
         }); 
@@ -191,7 +253,6 @@ transitions: [
 
   // ENTER
     async enter(data) {
-      // if (data.current.namespace !== "blank") {
         gsap.set(data.next.container, 
           {opacity: 0});
         
@@ -201,7 +262,6 @@ transitions: [
             {opacity: 1, 
             });
           }); 
-      // }
     }
 },
 
@@ -210,3 +270,10 @@ transitions: [
 ]
 });
 
+barba.hooks.once(() => {
+  test();
+});
+
+barba.hooks.enter(() => {
+  test();
+});

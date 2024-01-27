@@ -7,7 +7,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/images/*.{jpeg
 const { imagePath, altText } = Astro.props; 
 const {url} = Astro.props;
 const {theme} = Astro.props;
-const {datasrc} = Astro.props;
 
 
 if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "/src/images/*.{jpeg,jpg,png,gif}"`);
@@ -15,7 +14,7 @@ if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: 
 
 <button tabindex="-1" class="item2">
     <a href={url} class={"buttontext " + theme} data-fancybox="gallery" data-src={imagePath.replace('/src/images', '')}>
-        <Image loading='eager' decoding='auto' src={images[imagePath]()} alt={altText}/>
+        <Image loading='eager' decoding='auto' quality="low" src={images[imagePath]()} alt={altText}/>
         <i>Gallery Image</i>
     </a>   
 </button>

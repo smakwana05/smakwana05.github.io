@@ -7,6 +7,70 @@ import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 import { Fancybox } from "@fancyapps/ui";
 
+const options = {
+  root: null,
+  rootMargin: '0px 0px 200px 0px',
+  threshold: 0.5,
+}
+
+function test() {
+
+  function initialImageLoad() {
+    const images = Array.from(document.querySelectorAll('img[src]'));
+    const windowHeight = window.innerHeight;
+    images.forEach(image => {
+      const imagePosition = image.getBoundingClientRect().top;
+      if (imagePosition > windowHeight) { 
+        console.log("outsideview");
+        image.classList.add("hide");
+        image.loading = "lazy";
+        image.decoding = "async";
+      }
+    });
+
+  }
+  
+  initialImageLoad();
+
+  function imageLazyLoad() {
+    const images = Array.from(document.querySelectorAll('img[src]'));
+
+    if (images.length) {
+      if ('IntersectionObserver' in window) {
+        setupIntersectionObserver(images);
+      } else {
+        loadImages(images);
+      }
+    }
+  }
+
+  function setupIntersectionObserver(images) {
+    const observer = new IntersectionObserver(onIntersection, options);
+    images.forEach(image => observer.observe(image));
+  }
+
+  function onIntersection(entries, observer) {
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio >= 0.5) {
+        observer.unobserve(entry.target);
+        loadImage(entry.target);
+      }
+    });
+  }
+
+  function loadImages(images) {
+    images.forEach(loadImage);
+  }
+
+  function loadImage(image) {
+    image.classList.remove("hide");
+    console.log("REMOVEDHIDE");
+  }
+  imageLazyLoad();
+};
+
+
+
 
 var preloader = document.querySelector(".preloader");
 const allcontent = document.querySelector(".allcontent");
@@ -62,6 +126,7 @@ function fancyboxinstance() {
             console.log("close");  
             const indexonclose = fb.getSlide().index;
             localStorage.setItem("closedFBindex", indexonclose);
+            gsap.to('.header', { autoAlpha: 1 });
             timer = setTimeout(function() {
               history.back(); // go back after a delay if no popstate event has occurred
             }, 5); 
@@ -90,40 +155,45 @@ function fancyboxOpening(visit) {
   fancyboxinstance(); 
 }
 
-// window.addEventListener('popstate', function() {
-//   console.log("popstated");
-// });
+
+
 window.addEventListener('pageshow', (event) => {
   if (event.persisted && window.location.href.includes("gallery")) {
     Fancybox.fromSelector('[data-fancybox]', {
     });
-    // console.log('This page was restored from the bfcache from gallery');
   }
 });
+
+
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
   fancyboxinstance();
- 
+  
   imagesLoaded(allcontent, function (instance) {
     gsap.to(preloaderOnce, {autoAlpha: 0});
     preloaderOnce.style.display = "none";
-    gsap.to('.allcontent', { opacity: 1 });
-
+    gsap.to('.allcontent', { autoAlpha: 1 });
+    
     if (window.location.href.includes("gallery")) {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
-   
+    // test();
   });
 });
 
 let preloaderTimeout;
 
+swup.hooks.on('visit:end', (visit) => {
+  test();
+});
+
 //VISIT START
 swup.hooks.on('visit:start', async (visit) => {
-
+  
+  
   fancyboxOpening(visit);
-  if (window.scrollY > 30) {
+  if (window.scrollY > 30 && !visit.from.url.includes('gallery')) {
     gsap.set('.header', { autoAlpha: 0, duration: 0.15 });
   }
   if (
@@ -144,14 +214,13 @@ swup.hooks.on('visit:start', async (visit) => {
   //   // window.scrollTo(0,0);
   // };
 
-  if(!visit.from.url.includes('gallery')) {
+  // if(!visit.from.url.includes('gallery')) {
     preloaderTimeout = setTimeout(() => {
       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
     }, 300); 
-  };
+  // };
 
 }, {priority: 100});
-
 
 
 
@@ -160,21 +229,23 @@ swup.hooks.on('visit:start', async (visit) => {
 swup.hooks.replace('animation:out:await', async () => {
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
 
- 
 });
 
 
 //ANIMATION IN AWAIT
 swup.hooks.replace('animation:in:await', async () => {
+ 
   gsap.set('.gridwrapper', { opacity: 0 })
-
+  
   
  
   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
+
     clearTimeout(preloaderTimeout);
     gsap.to(preloader, { autoAlpha: 0 });
     gsap.to('.gridwrapper', { opacity: 1 });
     gsap.to('.header', { autoAlpha: 1 });
+    
   });
 
 
@@ -185,18 +256,21 @@ swup.hooks.replace('animation:in:await', async () => {
 
 
 swup.hooks.on('visit:end', async (visit) => {
+
   if(visit.from.url.includes('gallery')) {
    window.scrollTo(0, scrollposition);
 
-   gsap.set('.gridwrapper', { opacity: 0 })
+   gsap.set('.gridwrapper', { autoAlpha: 0 })
     await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
       clearTimeout(preloaderTimeout);
       gsap.to(preloader, { autoAlpha: 0 });
-      gsap.to('.gridwrapper', { opacity: 1 });
+      gsap.to('.gridwrapper', { autoAlpha: 1 });
+      
     });
   }
-
   if(visit.to.url.includes('gallery')) {
     window.scrollTo(0, scrollposition);
    }
+  
 });
+

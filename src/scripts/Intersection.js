@@ -14,6 +14,8 @@ function test() {
         if (imagePosition > windowHeight) { 
           console.log("outsideview");
           image.classList.add("hide");
+          // image.loading = "lazy";
+          // image.decoding = "async";
         }
       });
   
@@ -53,6 +55,7 @@ function test() {
   
     function loadImage(image) {
       image.classList.remove("hide");
+      console.log("REMOVEDHIDE");
     }
     imageLazyLoad();
 };

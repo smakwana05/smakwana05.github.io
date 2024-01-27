@@ -112,6 +112,7 @@ button {
 	visibility: hidden;
 	opacity: 0;
 }
+
 .menuicons, .navbarmobile, .footer-mobile, .descriptiontext.mobile, .descriptionbox.mobile {
 	display: none;
 }
@@ -154,7 +155,7 @@ a {
 	position: fixed;
 	top: 50%;
 	justify-content: center;
-	z-index: 1000;
+	z-index: 9000;
 	// opacity: 1;
 	visibility: hidden;
 	// visibility: visible;
@@ -164,7 +165,7 @@ a {
 }
 
 .preloader-onceload {
-	display: flex;
+	display: none;
 	height: 50px;
 	width: 100%;
 	position: fixed;
@@ -494,7 +495,7 @@ a {
 		// display: block;
 		
 		&.hide {
-			visibility: hidden;
+			// visibility: hidden;
 			opacity: 0;
 		}
 		
@@ -602,7 +603,7 @@ a {
 		border-radius: var(--mainborderrad);	
 
 		&.hide {
-			visibility: hidden;
+			// visibility: hidden;
 			opacity: 0;
 		}
 
