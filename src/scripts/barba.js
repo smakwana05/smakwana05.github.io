@@ -170,7 +170,6 @@ transitions: [
   {
     name: 'fade-once',
     async once(data) {  
-      window.scrollTo(0, 0);
    
 
       fancyboxOpening(data);
@@ -183,7 +182,9 @@ transitions: [
 
       await imagesLoaded( allcontent, 
           function (instance) {
-          data.next.container.querySelector('.container').style.height = "calc(100dvh - 118px)";
+          window.scrollTo(0, 0);
+   
+          // data.next.container.querySelector('.container').style.height = "calc(100dvh - 118px)";
           gsap.to(allcontent, 
             {autoAlpha: 1, 
               duration: 1,
