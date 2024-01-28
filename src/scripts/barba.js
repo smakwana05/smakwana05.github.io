@@ -191,7 +191,7 @@ transitions: [
             });
           gsap.to(preloader,{autoAlpha: 0});
       }); 
-      window.scrollTo(0, 0);
+     
     },
   },
   
@@ -273,3 +273,4 @@ barba.hooks.enter((data) => {
     test();
   };
 });
+

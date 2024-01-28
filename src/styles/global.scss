@@ -94,12 +94,12 @@
 
 /*------------------------------------- 0. HTML CORE -------------------------------------*/
 html {
-	// height: 100%;
+	height: 100%;
 	overflow-y: scroll;
 	overflow-x: clip;
 	scroll-behavior: smooth;
 	background-color: var(--white);
-	box-sizing: border-box;
+	// box-sizing: border-box;
 	transition: 0.25s;
 }
 
@@ -122,6 +122,7 @@ a.submenu {
 }
 
 body {
+	height: 100%;
 	margin: 0;	
 	display: grid;
 	position: relative;	
@@ -132,6 +133,7 @@ body {
 	position: absolute;
 	width: 100%;
 	transition: 0.3s;
+	height: 100%;
 }
 
 a {
@@ -1271,24 +1273,29 @@ html {
 	aspect-ratio: auto;
 
 	.overlay.travel, &:hover .overlay.travel {
-		opacity: 0.75;
+		// opacity: 0.75;
+		opacity: 0;
 	}
 
 	&:hover .overlay.architecture, .overlay.architecture {
-		opacity: 0.75;
+		// opacity: 0.75;
+		opacity: 0;
 	}
 
 	&:hover .overlay.art, .overlay.art, .overlay.art.darker {
-		opacity: 0.7;
+		// opacity: 0.7;
+		opacity: 0;
 
 		&.darker {	
-			opacity: 0.85;
+			// opacity: 0.85;
+			opacity: 0;
 		}
 	}
 	
 
 	&:hover .buttontext, .buttontext  {
-		opacity: 1;
+		// opacity: 1;
+		opacity: 0;
 	}
 
 	&.small {
