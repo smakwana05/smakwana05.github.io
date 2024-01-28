@@ -95,7 +95,7 @@
 
 /*------------------------------------- 0. HTML CORE -------------------------------------*/
 html {
-	height: 100vh;
+	// height: 100vh;
 	overflow-y: scroll;
 	overflow-x: clip;
 	scroll-behavior: smooth;
@@ -123,18 +123,19 @@ a.submenu {
 }
 
 body {
-	height: 100vh;
+	// height: 100vh;
 	margin: 0;	
 	display: grid;
 	position: relative;	
 }
 
 .allcontent {
+	// height: 100vh;
 	opacity: 0;
 	position: absolute;
 	width: 100%;
 	transition: 0.3s;
-	height: 100vh;
+	
 }
 
 a {

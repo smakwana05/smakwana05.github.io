@@ -6,7 +6,7 @@
     "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --host",
     "astro": "astro"
   },
   "dependencies": {
@@ -30,5 +30,8 @@
     "react-dom": "^18.2.0",
     "sass": "^1.69.7",
     "swup": "^4.5.0"
+  },
+  "devDependencies": {
+    "@barba/prefetch": "^2.1.10"
   }
 }

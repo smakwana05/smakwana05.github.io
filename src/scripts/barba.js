@@ -1,7 +1,19 @@
 import barba from '@barba/core';
+import barbaPrefetch from '@barba/prefetch';
 import { gsap } from "gsap";
 import imagesLoaded from 'imagesloaded';
 import { Fancybox } from '@fancyapps/ui';
+
+barba.use(barbaPrefetch);
+// get the wrapper
+const wrapper = allcontent;
+
+// tell Barba to use the prefetch plugin
+barba.use(barbaPrefetch, {
+  root: wrapper,
+  timeout: 2500,
+  limit: 0
+});
 
 var header = document.querySelector(".header");
 var menu = document.querySelector(".menu");
@@ -164,8 +176,7 @@ transitions: [
   {
     name: 'fade-once',
     async once(data) {  
-   
-
+      // allcontent.style.display = "none";  
       fancyboxOpening(data);
       if (data.next.namespace === "blank") {
         Fancybox.fromSelector('[data-fancybox]', {
@@ -174,6 +185,8 @@ transitions: [
 
       await imagesLoaded( allcontent, 
           function (instance) {
+          // allcontent.style.display = 'block';
+
           gsap.to(allcontent, 
             {autoAlpha: 1, 
               duration: 1,
@@ -257,7 +270,7 @@ barba.hooks.once((data) => {
     };
 });
 
-barba.hooks.enter((data) => {
+barba.hooks.beforeEnter((data) => {
   if (data.next.namespace === "masonry") {
     test();
   };
