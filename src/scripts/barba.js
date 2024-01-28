@@ -85,9 +85,6 @@ function test() {
   imageLazyLoad();
 };
 
-
-
-
 function preloaderanimation(data) {
     setTimeout(function() {
       gsap.set(preloader, {autoAlpha: 1});
@@ -154,9 +151,6 @@ function fancyboxOpening(data) {
   }
 }
 
-
-
-
 if (history.scrollRestoration) {
   history.scrollRestoration = 'manual';
 }
@@ -178,13 +172,8 @@ transitions: [
         });
       }
 
-      // gsap.set(preloader,{autoAlpha: 1});
-
       await imagesLoaded( allcontent, 
           function (instance) {
-          
-   
-          // data.next.container.querySelector('.container').style.height = "calc(100dvh - 118px)";
           gsap.to(allcontent, 
             {autoAlpha: 1, 
               duration: 1,
