@@ -258,7 +258,7 @@ if (history.scrollRestoration) {
 barba.init({
 preventRunning: true,
 debug: true,
-timeout: 5000,
+// timeout: 5000,
    
 transitions: [
   {
@@ -276,11 +276,12 @@ transitions: [
           
           gsap.to(allcontent, 
             {autoAlpha: 1, 
-              duration: 1,
+              duration: 0.5,
             });
           gsap.to(preloader,{autoAlpha: 0});
       }); 
     },
+
   },
   
   
@@ -331,21 +332,16 @@ transitions: [
       }
     },
 
-    async beforeEnter(data) {
-      if (data.next.namespace === "masonry") {
-        test();
-      };
-    },
+
   // ENTER
     async enter(data) {
         gsap.set(data.next.container, 
-          {opacity: 0});
+          {autoAlpha: 0});
         
-        await imagesLoaded( data.next.container, 
+        await imagesLoaded(data.next.container, 
           function (instance) {
           gsap.to(data.next.container, 
-            {opacity: 1, 
-            });
+            {autoAlpha: 1});
           }); 
     }
 },
@@ -361,9 +357,9 @@ barba.hooks.once((data) => {
     };
 });
 
-// barba.hooks.beforeEnter((data) => {
-//   if (data.next.namespace === "masonry") {
-//     test();
-//   };
-// });
+barba.hooks.enter((data) => {
+  if (data.next.namespace === "masonry") {
+    test();
+  };
+});
 

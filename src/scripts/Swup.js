@@ -7,6 +7,69 @@ import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 import { Fancybox } from "@fancyapps/ui";
 
+// const options = {
+//   root: null,
+//   rootMargin: '0px 0px 200px 0px',
+//   threshold: 0.5,
+// }
+
+// function test() {
+
+//   function initialImageLoad() {
+//     const images = Array.from(document.querySelectorAll('img[src]'));
+//     const windowHeight = window.innerHeight;
+//     images.forEach(image => {
+//       const imagePosition = image.getBoundingClientRect().top;
+//       if (imagePosition > windowHeight) { 
+//         console.log("outsideview");
+//         // image.classList.add("hide");
+//         image.loading = "lazy";
+//         image.decoding = "async";
+//       }
+//     });
+
+//   }
+  
+//   initialImageLoad();
+
+//   function imageLazyLoad() {
+//     const images = Array.from(document.querySelectorAll('img[src]'));
+
+//     if (images.length) {
+//       if ('IntersectionObserver' in window) {
+//         setupIntersectionObserver(images);
+//       } else {
+//         loadImages(images);
+//       }
+//     }
+//   }
+
+//   function setupIntersectionObserver(images) {
+//     const observer = new IntersectionObserver(onIntersection, options);
+//     images.forEach(image => observer.observe(image));
+//   }
+
+//   function onIntersection(entries, observer) {
+//     entries.forEach((entry) => {
+//       if (entry.intersectionRatio >= 0.5) {
+//         observer.unobserve(entry.target);
+//         loadImage(entry.target);
+//       }
+//     });
+//   }
+
+//   function loadImages(images) {
+//     images.forEach(loadImage);
+//   }
+
+//   function loadImage(image) {
+//     // image.classList.remove("hide");
+//     console.log("REMOVEDHIDE");
+//   }
+//   imageLazyLoad();
+// };
+
+
 const options = {
   root: null,
   rootMargin: '0px 0px 200px 0px',
@@ -14,37 +77,36 @@ const options = {
 }
 
 function test() {
+  const images = Array.from(document.querySelectorAll('img[src]'));
+  const windowHeight = window.innerHeight;
 
   function initialImageLoad() {
-    const images = Array.from(document.querySelectorAll('img[src]'));
-    const windowHeight = window.innerHeight;
     images.forEach(image => {
       const imagePosition = image.getBoundingClientRect().top;
       if (imagePosition > windowHeight) { 
         console.log("outsideview");
-        // image.classList.add("hide");
         image.loading = "lazy";
-        image.decoding = "async";
+        // image.decoding = "async";
+        image.style.opacity = 0;
+        // gsap.set(image, {opacity: 0});
       }
     });
-
   }
   
   initialImageLoad();
 
   function imageLazyLoad() {
-    const images = Array.from(document.querySelectorAll('img[src]'));
-
     if (images.length) {
       if ('IntersectionObserver' in window) {
-        setupIntersectionObserver(images);
-      } else {
-        loadImages(images);
+        setupIntersectionObserver();
+      } 
+      else {
+        loadImages();
       }
     }
   }
 
-  function setupIntersectionObserver(images) {
+  function setupIntersectionObserver() {
     const observer = new IntersectionObserver(onIntersection, options);
     images.forEach(image => observer.observe(image));
   }
@@ -58,18 +120,30 @@ function test() {
     });
   }
 
-  function loadImages(images) {
+  function loadImages() {
     images.forEach(loadImage);
   }
 
   function loadImage(image) {
-    // image.classList.remove("hide");
-    console.log("REMOVEDHIDE");
+    // Check if the image is already loaded
+    if (image.complete) {
+      // If the image is loaded, fade it in
+      // gsap.to(image, {opacity: 1, duration: 0.25});
+      image.style.opacity = 1;
+      console.log("REMOVEDHIDE");
+    } else {
+      // If the image is not loaded, set up a load event listener
+      image.onload = function() {
+        // When the image is loaded, fade it in
+        // gsap.to(image,  {opacity: 1, duration: 0.25});
+        image.style.opacity = 1;
+        console.log("REMOVEDHIDE");
+      }
+    }
   }
+  
   imageLazyLoad();
 };
-
-
 
 
 var preloader = document.querySelector(".preloader");
@@ -178,19 +252,19 @@ document.addEventListener('DOMContentLoaded', () => {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
-    // test();
+    test();
   });
 });
 
 let preloaderTimeout;
 
-swup.hooks.on('visit:end', (visit) => {
-  test();
-});
+// swup.hooks.on('visit:end', (visit) => {
+//   test();
+// });
 
 //VISIT START
 swup.hooks.on('visit:start', async (visit) => {
-  
+ 
   
   fancyboxOpening(visit);
   if (window.scrollY > 30 && !visit.from.url.includes('gallery')) {
@@ -234,7 +308,6 @@ swup.hooks.replace('animation:out:await', async () => {
 
 //ANIMATION IN AWAIT
 swup.hooks.replace('animation:in:await', async () => {
- 
   gsap.set('.gridwrapper', { opacity: 0 })
   
   
@@ -256,7 +329,7 @@ swup.hooks.replace('animation:in:await', async () => {
 
 
 swup.hooks.on('visit:end', async (visit) => {
-
+  
   if(visit.from.url.includes('gallery')) {
    window.scrollTo(0, scrollposition);
 
