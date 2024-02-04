@@ -353,13 +353,13 @@ transitions: [
 barba.hooks.once((data) => {
   console.log(data);
     if (data.current.namespace !== "") {
-      test();
+      // test();
     };
 });
 
 barba.hooks.enter((data) => {
   if (data.next.namespace === "masonry") {
-    test();
+    // test();
   };
 });
 
