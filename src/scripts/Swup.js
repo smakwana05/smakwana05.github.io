@@ -297,6 +297,7 @@ swup.hooks.on('visit:start', async (visit) => {
       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
     }, 300); 
   // };
+  
 
 }, {priority: 100});
 
