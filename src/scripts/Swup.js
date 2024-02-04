@@ -7,13 +7,83 @@ import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 import { Fancybox } from "@fancyapps/ui";
 
-const options = {
-  root: null,
-  rootMargin: '0px 0px 200px 0px',
-  threshold: 0.5,
-}
+
+// function test() {
+
+//   const options = {
+//     root: null,
+//     rootMargin: '0px 0px 200px 0px',
+//     threshold: 0.5,
+//   }
+  
+//   const images = Array.from(document.querySelectorAll('img[src]'));
+//   const windowHeight = window.innerHeight;
+
+//   function initialImageLoad() {
+//     images.forEach(image => {
+//       const imagePosition = image.getBoundingClientRect().top;
+//       if (imagePosition > windowHeight) { 
+//         console.log("outsideview");
+//         image.loading = "lazy";
+//         image.decoding = "async";
+//         image.style.opacity = 0;
+//         // gsap.set(image, {opacity: 0});
+//       }
+//     });
+//   }
+  
+//   initialImageLoad();
+
+//   function imageLazyLoad() {
+//     if (images.length) {
+//       if ('IntersectionObserver' in window) {
+//         setupIntersectionObserver();
+//       } 
+//       else {
+//         loadImages();
+//       }
+//     }
+//   }
+
+//   function setupIntersectionObserver() {
+//     const observer = new IntersectionObserver(onIntersection, options);
+//     images.forEach(image => observer.observe(image));
+//   }
+
+//   function onIntersection(entries, observer) {
+//     entries.forEach((entry) => {
+//       if (entry.intersectionRatio >= 0.5) {
+//         observer.unobserve(entry.target);
+//         loadImage(entry.target);
+//       }
+//     });
+//   }
+
+//   function loadImages() {
+//     images.forEach(loadImage);
+//   }
+
+//   function loadImage(image) {
+//     if (image.complete) {
+//       image.style.opacity = 1;
+//     } else {
+//       image.onload = function() {
+//         image.style.opacity = 1;
+//         console.log("REMOVEDHIDE");
+//       }
+//     }
+//   }
+  
+//   imageLazyLoad();
+// };
 
 function test() {
+  const options = {
+    root: null,
+    rootMargin: '0px 0px 200px 0px',
+    threshold: 0.5,
+  };
+
   const images = Array.from(document.querySelectorAll('img[src]'));
   const windowHeight = window.innerHeight;
 
@@ -25,19 +95,17 @@ function test() {
         image.loading = "lazy";
         image.decoding = "async";
         image.style.opacity = 0;
-        // gsap.set(image, {opacity: 0});
       }
     });
   }
-  
+
   initialImageLoad();
 
   function imageLazyLoad() {
     if (images.length) {
       if ('IntersectionObserver' in window) {
         setupIntersectionObserver();
-      } 
-      else {
+      } else {
         loadImages();
       }
     }
@@ -62,26 +130,18 @@ function test() {
   }
 
   function loadImage(image) {
-    // Check if the image is already loaded
     if (image.complete) {
-      // If the image is loaded, fade it in
-      // gsap.to(image, {opacity: 1, duration: 0.25});
       image.style.opacity = 1;
-      console.log("REMOVEDHIDE");
     } else {
-      // If the image is not loaded, set up a load event listener
-      image.onload = function() {
-        // When the image is loaded, fade it in
-        // gsap.to(image,  {opacity: 1, duration: 0.25});
+      image.onload = () => {
         image.style.opacity = 1;
         console.log("REMOVEDHIDE");
-      }
+      };
     }
   }
-  
-  imageLazyLoad();
-};
 
+  imageLazyLoad();
+}
 
 var preloader = document.querySelector(".preloader");
 const allcontent = document.querySelector(".allcontent");
