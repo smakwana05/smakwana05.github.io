@@ -7,69 +7,6 @@ import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 import { Fancybox } from "@fancyapps/ui";
 
-// const options = {
-//   root: null,
-//   rootMargin: '0px 0px 200px 0px',
-//   threshold: 0.5,
-// }
-
-// function test() {
-
-//   function initialImageLoad() {
-//     const images = Array.from(document.querySelectorAll('img[src]'));
-//     const windowHeight = window.innerHeight;
-//     images.forEach(image => {
-//       const imagePosition = image.getBoundingClientRect().top;
-//       if (imagePosition > windowHeight) { 
-//         console.log("outsideview");
-//         // image.classList.add("hide");
-//         image.loading = "lazy";
-//         image.decoding = "async";
-//       }
-//     });
-
-//   }
-  
-//   initialImageLoad();
-
-//   function imageLazyLoad() {
-//     const images = Array.from(document.querySelectorAll('img[src]'));
-
-//     if (images.length) {
-//       if ('IntersectionObserver' in window) {
-//         setupIntersectionObserver(images);
-//       } else {
-//         loadImages(images);
-//       }
-//     }
-//   }
-
-//   function setupIntersectionObserver(images) {
-//     const observer = new IntersectionObserver(onIntersection, options);
-//     images.forEach(image => observer.observe(image));
-//   }
-
-//   function onIntersection(entries, observer) {
-//     entries.forEach((entry) => {
-//       if (entry.intersectionRatio >= 0.5) {
-//         observer.unobserve(entry.target);
-//         loadImage(entry.target);
-//       }
-//     });
-//   }
-
-//   function loadImages(images) {
-//     images.forEach(loadImage);
-//   }
-
-//   function loadImage(image) {
-//     // image.classList.remove("hide");
-//     console.log("REMOVEDHIDE");
-//   }
-//   imageLazyLoad();
-// };
-
-
 const options = {
   root: null,
   rootMargin: '0px 0px 200px 0px',
@@ -86,7 +23,7 @@ function test() {
       if (imagePosition > windowHeight) { 
         console.log("outsideview");
         image.loading = "lazy";
-        // image.decoding = "async";
+        image.decoding = "async";
         image.style.opacity = 0;
         // gsap.set(image, {opacity: 0});
       }
@@ -258,9 +195,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let preloaderTimeout;
 
-// swup.hooks.on('visit:end', (visit) => {
-//   test();
-// });
+swup.hooks.on('content:replace', (visit) => {
+
+  if (
+    visit.to.url.includes('life-drawing')||
+    visit.to.url.includes('school')
+  ) {
+    test();
+  }
+ 
+});
 
 //VISIT START
 swup.hooks.on('visit:start', async (visit) => {

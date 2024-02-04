@@ -341,7 +341,7 @@ transitions: [
         await imagesLoaded(data.next.container, 
           function (instance) {
           gsap.to(data.next.container, 
-            {autoAlpha: 1});
+            {autoAlpha: 1, duration: 0.25});
           }); 
     }
 },
@@ -353,13 +353,13 @@ transitions: [
 barba.hooks.once((data) => {
   console.log(data);
     if (data.current.namespace !== "") {
-      // test();
+      test();
     };
 });
 
 barba.hooks.enter((data) => {
   if (data.next.namespace === "masonry") {
-    // test();
+    test();
   };
 });
 
