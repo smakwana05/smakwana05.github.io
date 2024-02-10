@@ -170,18 +170,23 @@ window.addEventListener('pageshow', (event) => {
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
   fancyboxinstance();
-  test();
+  // test();
   imagesLoaded(allcontent, function (instance) {
+    
     gsap.to(preloaderOnce, {autoAlpha: 0});
     preloaderOnce.style.display = "none";
     gsap.to('.allcontent', { autoAlpha: 1 });
+    test();
     
     if (window.location.href.includes("gallery")) {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
-    // test();
+    console.log(window.innerHeight);
   });
+
+
+
 });
 
 let preloaderTimeout;
