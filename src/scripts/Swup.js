@@ -120,14 +120,11 @@ function fancyboxinstance() {
       showClass: "fadeonly",
       hideClass: "fadeoutonly",
       on: {
-        "loading": (fb) => {
-          console.log("loadingg");
-          // gsap.set(preloader, { autoAlpha: 1 });
-        },
-        "done": (fb) => {
-          console.log("slidesdone");
-          // gsap.to(preloader, { autoAlpha: 0 });
-        },
+        // "done": (fancybox, slide) => {
+        //   if (fancybox.isCurrentSlide(slide)) {
+        //      gsap.to(preloader, { autoAlpha: 0, duration: 0.125 });
+        //   };
+        // },
         "init": (fb) => { 
             console.log("init");
         },
@@ -180,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
   fancyboxinstance();
   // test();
   imagesLoaded(allcontent, function (instance) {
-    
     gsap.to(preloaderOnce, {autoAlpha: 0});
     preloaderOnce.style.display = "none";
     gsap.to('.allcontent', { autoAlpha: 1 });
@@ -190,10 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
+    // test();
   });
-
-
-
+  
 });
 
 let preloaderTimeout;
@@ -201,7 +196,8 @@ let preloaderTimeout;
 swup.hooks.on('content:replace', (visit) => {
 
   if (
-    visit.to.url.includes('life-drawing') || visit.to.url.includes('school') && !visit.from.url.includes('gallery')
+    visit.to.url.includes('life-drawing')||
+    visit.to.url.includes('school')
   ) {
     test();
   }
@@ -230,10 +226,15 @@ swup.hooks.on('visit:start', async (visit) => {
   if(visit.to.url.includes('gallery')) {
     scrollposition = window.scrollY;
   }
+  // else {
+  //   // window.scrollTo(0,0);
+  // };
 
+  // if(!visit.from.url.includes('gallery')) {
     preloaderTimeout = setTimeout(() => {
       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
     }, 300); 
+  // };
 
 
 }, {priority: 100});
