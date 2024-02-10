@@ -8,6 +8,75 @@ import { gsap } from "gsap";
 import { Fancybox } from "@fancyapps/ui";
 
 
+// function test() {
+
+//   const options = {
+//     root: null,
+//     rootMargin: '0px 0px 200px 0px',
+//     threshold: 0.5,
+//   }
+  
+//   const images = Array.from(document.querySelectorAll('img[src]'));
+//   const windowHeight = window.innerHeight;
+
+//   function initialImageLoad() {
+//     images.forEach(image => {
+//       const imagePosition = image.getBoundingClientRect().top;
+//       if (imagePosition > windowHeight) { 
+//         console.log("outsideview");
+//         image.loading = "lazy";
+//         image.decoding = "async";
+//         image.style.opacity = 0;
+//         // gsap.set(image, {opacity: 0});
+//       }
+//     });
+//   }
+  
+//   initialImageLoad();
+
+//   function imageLazyLoad() {
+//     if (images.length) {
+//       if ('IntersectionObserver' in window) {
+//         setupIntersectionObserver();
+//       } 
+//       else {
+//         loadImages();
+//       }
+//     }
+//   }
+
+//   function setupIntersectionObserver() {
+//     const observer = new IntersectionObserver(onIntersection, options);
+//     images.forEach(image => observer.observe(image));
+//   }
+
+//   function onIntersection(entries, observer) {
+//     entries.forEach((entry) => {
+//       if (entry.intersectionRatio >= 0.5) {
+//         observer.unobserve(entry.target);
+//         loadImage(entry.target);
+//       }
+//     });
+//   }
+
+//   function loadImages() {
+//     images.forEach(loadImage);
+//   }
+
+//   function loadImage(image) {
+//     if (image.complete) {
+//       image.style.opacity = 1;
+//     } else {
+//       image.onload = function() {
+//         image.style.opacity = 1;
+//         console.log("REMOVEDHIDE");
+//       }
+//     }
+//   }
+  
+//   imageLazyLoad();
+// };
+
 function test() {
   const options = {
     root: null,
@@ -23,7 +92,7 @@ function test() {
       const imagePosition = image.getBoundingClientRect().top;
       if (imagePosition > windowHeight) { 
         console.log("outsideview");
-        // image.loading = "lazy";
+        image.loading = "lazy";
         image.decoding = "async";
         image.style.opacity = 0;
       }
@@ -170,7 +239,7 @@ window.addEventListener('pageshow', (event) => {
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
   fancyboxinstance();
-  test();
+  
   imagesLoaded(allcontent, function (instance) {
     gsap.to(preloaderOnce, {autoAlpha: 0});
     preloaderOnce.style.display = "none";
@@ -180,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
-    // test();
+    test();
   });
 });
 
@@ -223,11 +292,11 @@ swup.hooks.on('visit:start', async (visit) => {
   //   // window.scrollTo(0,0);
   // };
 
-  // if(!visit.from.url.includes('gallery')) {
+  if(!visit.from.url.includes('gallery')) {
     preloaderTimeout = setTimeout(() => {
       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
     }, 300); 
-  // };
+  };
 
 
 }, {priority: 100});

@@ -14,7 +14,7 @@ if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: 
 
 <button tabindex="-1" class="item2">
     <a href={url} class={"buttontext " + theme} data-fancybox="gallery" data-src={imagePath.replace('/src/images', '')}>
-        <Image loading='eager' decoding='auto' quality="low" src={images[imagePath]()} alt={altText}/>
+        <Image decoding='auto' quality="low" src={images[imagePath]()} alt={altText}/>
         <i>Gallery Image</i>
     </a>   
 </button>
