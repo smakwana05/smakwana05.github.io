@@ -120,6 +120,14 @@ function fancyboxinstance() {
       showClass: "fadeonly",
       hideClass: "fadeoutonly",
       on: {
+        "loading": (fb) => {
+          console.log("loadingg");
+          // gsap.set(preloader, { autoAlpha: 1 });
+        },
+        "done": (fb) => {
+          console.log("slidesdone");
+          // gsap.to(preloader, { autoAlpha: 0 });
+        },
         "init": (fb) => { 
             console.log("init");
         },
@@ -182,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
       Fancybox.fromSelector('[data-fancybox]', {
       });
     }
-    console.log(window.innerHeight);
   });
 
 
@@ -194,8 +201,7 @@ let preloaderTimeout;
 swup.hooks.on('content:replace', (visit) => {
 
   if (
-    visit.to.url.includes('life-drawing')||
-    visit.to.url.includes('school')
+    visit.to.url.includes('life-drawing') || visit.to.url.includes('school') && !visit.from.url.includes('gallery')
   ) {
     test();
   }
@@ -224,15 +230,10 @@ swup.hooks.on('visit:start', async (visit) => {
   if(visit.to.url.includes('gallery')) {
     scrollposition = window.scrollY;
   }
-  // else {
-  //   // window.scrollTo(0,0);
-  // };
 
-  // if(!visit.from.url.includes('gallery')) {
     preloaderTimeout = setTimeout(() => {
       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
     }, 300); 
-  // };
 
 
 }, {priority: 100});

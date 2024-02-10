@@ -110,7 +110,7 @@ button {
 }
 
 .hidden {
-	visibility: hidden;
+	// visibility: hidden;
 	opacity: 0;
 }
 
@@ -159,7 +159,7 @@ a {
 	position: fixed;
 	top: 50%;
 	justify-content: center;
-	z-index: 9000;
+	z-index: 10000;
 	// opacity: 1;
 	visibility: hidden;
 	// visibility: visible;
@@ -348,10 +348,9 @@ a {
 //   }
 /* ------------------------------------- 3. FANCYBOX ONLY ------------------------------------- */
 
-// .f-spinner svg {
-//     width: 10px !important;
-//     height: 10px !important;
-// }
+.f-spinner {
+    display: none !important;
+}
 
 .fancybox__viewport.is-draggable {
     cursor: default !important
