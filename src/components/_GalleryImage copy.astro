@@ -12,13 +12,13 @@ const {theme} = Astro.props;
 if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "/src/images/*.{jpeg,jpg,png,gif}"`);
 ---
 
+
 <button tabindex="-1" class="item2">
-    <a href={url} class={"buttontext " + theme} data-fancybox="gallery" data-pswp-src={imagePath.replace('/src/images', '')}>
+    <a href={url} class={"buttontext " + theme} data-fancybox="gallery" data-src={imagePath.replace('/src/images', '')}>
         <Image decoding='auto' quality="low" src={images[imagePath]()} alt={altText}/>
         <i>Gallery Image</i>
     </a>   
 </button>
-
 
 
 

@@ -112,6 +112,7 @@ button {
 .hidden {
 	// visibility: hidden;
 	opacity: 0;
+	pointer-events: none;
 }
 
 .menuicons, .navbarmobile, .footer-mobile, .descriptiontext.mobile, .descriptionbox.mobile {

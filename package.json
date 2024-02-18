@@ -25,6 +25,7 @@
     "astro": "^4.3.2",
     "gsap": "^3.12.4",
     "imagesloaded": "^5.0.0",
+    "photoswipe": "^5.4.3",
     "preact": "^10.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

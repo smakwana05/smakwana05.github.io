@@ -5,16 +5,25 @@ import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupA11yPlugin from '@swup/a11y-plugin';
 import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
+// import { Fancybox } from "@fancyapps/ui";
+
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import 'photoswipe/style.css';
 
-let timer;
-var preloader = document.querySelector(".preloader");
-const allcontent = document.querySelector(".allcontent");
-const header = document.querySelector('.header');
-let preloaderTimeout;
-var preloaderOnce = document.querySelector(".preloader-onceload");
-let scrollposition = 0;
+const lightbox = new PhotoSwipeLightbox({
+  gallery: '.columns.test',
+  children: 'button > a',
+  zoom: false,
+  counter: false,
+  preload: [1, 3],
+  showHideAnimationType: 'fade',
+  bgOpacity: 1,
+  preloaderDelay: 300,
+  pswpModule: () => import('photoswipe')
+});
+  
+
+
 
 //SWUP
 const swup = new Swup({
@@ -29,42 +38,18 @@ const swup = new Swup({
   ]
 });
 
-//LIGHTBOX
-const lightbox = new PhotoSwipeLightbox({
-  gallery: '.columns.test',
-  children: 'button > a',
-  zoom: false,
-  counter: false,
-  preload: [1, 3],
-  showHideAnimationType: 'fade',
-  bgOpacity: 1,
-  preloaderDelay: 300,
-  initialZoomLevel: 0.45,
-  pswpModule: () => import('photoswipe')
-});
-
-lightbox.on('close', () => {
-  const indexonclose = pswp.currIndex;
-  localStorage.setItem("closedFBindex", indexonclose);
-  console.log("close");
-  timer = setTimeout(function() {
-    history.back(); // go back after a delay if no popstate event has occurred
-  }, 5);   
-});
+var preloader = document.querySelector(".preloader");
+const allcontent = document.querySelector(".allcontent");
+const header = document.querySelector('.header');
+let preloaderTimeout;
+var preloaderOnce = document.querySelector(".preloader-onceload");
+let scrollposition = 0;
 
 
-window.addEventListener('popstate', function() {
-  clearTimeout(timer); 
-});
-
-window.addEventListener('pageshow', (event) => {
-  if (event.persisted && window.location.href.includes("gallery")) {
-    const lastslide = localStorage.getItem("closedFBindex");
-    lightbox.loadAndOpen(Number(lastslide));
-  }
-});
 
 function PhotoswipeInit() {
+
+ 
   const imageLinks = document.querySelectorAll('.columns.test button > a');  
   imagesLoaded(document.querySelector('.gridwrapper'), function() {
     imageLinks.forEach(link => {
@@ -73,12 +58,21 @@ function PhotoswipeInit() {
     link.setAttribute('data-pswp-height', img.naturalHeight);
     });
   });
+
   lightbox.init();
+  // lightbox.on('close', () => {
+  //   const indexonclose = pswp.currIndex;
+  //   localStorage.setItem("closedFBindex", indexonclose);
+  //   console.log("close");
+  // });
+
+ 
+  // lightbox.on('loadComplete', ({ content, slide }) => {
+  //   console.log('loadComplete', content);
+  // });
 }
 
-
-//INTERSECTION
-function intersectionSetup() {
+function test() {
   const options = {
     root: null,
     rootMargin: '0px 0px 200px 0px',
@@ -145,131 +139,153 @@ function intersectionSetup() {
 }
 
 
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted && window.location.href.includes("gallery")) {
+    console.log("persisted");
+    // location.reload();
+    // setTimeout(function() {
+    //     lightbox.loadAndOpen(0);
+    // }, 5); 
+    const lastslide = localStorage.getItem("closedFBindex");
+    lightbox.loadAndOpen(Number(lastslide));
+ 
+  }
+});
+
+
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
   PhotoswipeInit();
+
+  // fancyboxinstance();
   imagesLoaded(allcontent, function (instance) {
     if (window.location.href.includes("gallery")) {
       lightbox.loadAndOpen(0);
+      // Fancybox.fromSelector('[data-fancybox]', {
+      // });
     }
     gsap.to(preloaderOnce, {autoAlpha: 0});
     preloaderOnce.style.display = "none";
+    
     gsap.to('.allcontent', { autoAlpha: 1 });
-    intersectionSetup(); 
+    test();
+    
+ 
   });
+  
 });
 
-//CONTENT REPLACE
+
 swup.hooks.on('content:replace', async (visit) => {
+
+
   if (
     visit.to.url.includes('life-drawing')||
     visit.to.url.includes('school')
   ) {
-    intersectionSetup();
+    test();
     PhotoswipeInit();
+    
   }
+ 
 });
 
+let timer;
+window.addEventListener('popstate', function() {
+  console.log("pops");
+  clearTimeout(timer); 
+});
+
+lightbox.on('close', () => {
+  const indexonclose = pswp.currIndex;
+  localStorage.setItem("closedFBindex", indexonclose);
+  console.log("close");
+  timer = setTimeout(function() {
+    history.back(); // go back after a delay if no popstate event has occurred
+  }, 5); 
+  
+});
 
 //VISIT START
-// swup.hooks.on('visit:start', async (visit) => {
-//   if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
-//       const lastslide = localStorage.getItem("closedFBindex");
-//       lightbox.loadAndOpen(Number(lastslide));
-//   }
-//   if (window.scrollY > 30 && !visit.from.url.includes('gallery')) {
-//     gsap.set('.header', { autoAlpha: 0, duration: 0.15 });
-//   }
-//   if (
-//     visit.to.url.includes('life-drawing')||
-//     visit.to.url.includes('school')||
-//     visit.to.url.includes('architecture')||
-//     visit.to.url.includes('travel')
-//   ) {
-//     header.classList.add("shrink");
-//   } else {
-//     header.classList.remove("shrink");
-//   };
-
-//   if(visit.to.url.includes('gallery')) {
-//     scrollposition = window.scrollY;
-//   }
-//   if(visit.from.url.includes('gallery')) {
-//     lightbox.pswp.close();
-//   }
-
-
-//   if(visit.from.url.includes('gallery')||visit.to.url.includes('gallery')) {
-//     preloaderTimeout = setTimeout(() => {
-//       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
-//     }, 800); 
-//   } else {
-
-//     preloaderTimeout = setTimeout(() => {
-//       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
-//     }, 300); 
-
-//   }
-
-// }, {priority: 100});
-
 swup.hooks.on('visit:start', async (visit) => {
-  const headerShrinkUrl = ['life-drawing', 'school', 'architecture', 'travel'];
-  const galleryIncluded = visit.from.url.includes('gallery') || visit.to.url.includes('gallery');
 
   if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
-    const lastslide = localStorage.getItem("closedFBindex");
-    lightbox.loadAndOpen(Number(lastslide));
+      const lastslide = localStorage.getItem("closedFBindex");
+      lightbox.loadAndOpen(Number(lastslide));
   }
-
+  
+  // fancyboxOpening(visit);
   if (window.scrollY > 30 && !visit.from.url.includes('gallery')) {
     gsap.set('.header', { autoAlpha: 0, duration: 0.15 });
   }
 
-  if (headerShrinkUrl.some(url => visit.to.url.includes(url))) {
+  if (
+    visit.to.url.includes('life-drawing')||
+    visit.to.url.includes('school')||
+    visit.to.url.includes('architecture')||
+    visit.to.url.includes('travel')
+  ) {
     header.classList.add("shrink");
   } else {
     header.classList.remove("shrink");
-  }
+  };
 
   if(visit.to.url.includes('gallery')) {
     scrollposition = window.scrollY;
   }
-
   if(visit.from.url.includes('gallery')) {
     lightbox.pswp.close();
+
+
+    
   }
 
-  const delay = galleryIncluded ? 800 : 300;
-  preloaderTimeout = setTimeout(() => {
-    gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
-  }, delay);
+
+  if(visit.from.url.includes('gallery')||visit.to.url.includes('gallery')) {
+    preloaderTimeout = setTimeout(() => {
+      gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
+    }, 800); 
+  } else {
+
+    preloaderTimeout = setTimeout(() => {
+      gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
+    }, 300); 
+
+  }
 
 }, {priority: 100});
+
+
 
 
 //ANIMATION OUT AWAIT
 swup.hooks.replace('animation:out:await', async () => {
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
+
 });
 
 
 //ANIMATION IN AWAIT
 swup.hooks.replace('animation:in:await', async () => {
   gsap.set('.gridwrapper', { opacity: 0 })
+  
   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
+
     clearTimeout(preloaderTimeout);
     gsap.to(preloader, { autoAlpha: 0 });
     gsap.to('.gridwrapper', { opacity: 1 });
     gsap.to('.header', { autoAlpha: 1 });
+    
+    
   });
+
+
 },{priority: -100});
 
 
 
 
 
-//VISIT END
 swup.hooks.on('visit:end', async (visit) => {
   
   if(visit.from.url.includes('gallery')) {
