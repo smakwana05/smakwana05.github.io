@@ -6,7 +6,7 @@ import SwupA11yPlugin from '@swup/a11y-plugin';
 import imagesLoaded from 'imagesloaded';
 import { gsap } from "gsap";
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
-import 'photoswipe/style.css';
+// import "pho";
 
 let timer;
 var preloader = document.querySelector(".preloader");
