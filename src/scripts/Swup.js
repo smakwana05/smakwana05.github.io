@@ -16,6 +16,33 @@ let preloaderTimeout;
 var preloaderOnce = document.querySelector(".preloader-onceload");
 let scrollposition = 0;
 
+const leftArrowSVGString = `
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxArrowSvg" viewBox="0 0 100 100">
+          <path d="M69.7 5 21.4 50 70 95" class="ArrowSvgPath"/>
+</svg>`;
+
+const rightArrowSVGString = `
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxArrowSvg" viewBox="0 0 100 100" transform="scale(-1, -1)">
+          <path d="M69.7 5 21.4 50 70 95" class="ArrowSvgPath"/>
+</svg>`;
+
+const closeSVGString = `
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxCloseSvg" viewBox="0 0 100 100">
+
+      <path d="m11.9 11.9 76.2 76.2M88.1 11.9 11.9 88.1" class="CloseSvgPath"/>
+
+</svg>
+`;
+
+const loadSVGString = 
+// `<div class="pswp__icn"><div class="circlespin--lightbox"></div></div>  `
+`
+<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="pswp__icn" viewBox="0 0 100 100">
+      <path d="M50 90c-22.1 0-40-17.9-40-40" style="fill:none;stroke:#000;stroke-width:8; stroke-linecap:square;stroke-miterlimit:10"/>
+</svg>
+`;  
+
+
 //SWUP
 const swup = new Swup({
   animateHistoryBrowsing: true,
@@ -39,8 +66,18 @@ const lightbox = new PhotoSwipeLightbox({
   showHideAnimationType: 'fade',
   bgOpacity: 1,
   preloaderDelay: 300,
-  initialZoomLevel: 0.45,
-  pswpModule: () => import('photoswipe')
+  // initialZoomLevel: 'fit',
+  initialZoomLevel: (zoomLevelObject) => {
+   
+      return zoomLevelObject.fit - 0.1;
+  },
+  pswpModule: () => import('photoswipe'),
+  arrowPrevSVG: leftArrowSVGString,
+  arrowNextSVG: rightArrowSVGString,
+  closeSVG: closeSVGString,
+  preloaderSVG: loadSVGString,
+  // mainClass: 'pswp-with-perma-preloader',
+
 });
 
 lightbox.on('close', () => {
@@ -172,51 +209,10 @@ swup.hooks.on('content:replace', async (visit) => {
 
 
 //VISIT START
-// swup.hooks.on('visit:start', async (visit) => {
-//   if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
-//       const lastslide = localStorage.getItem("closedFBindex");
-//       lightbox.loadAndOpen(Number(lastslide));
-//   }
-//   if (window.scrollY > 30 && !visit.from.url.includes('gallery')) {
-//     gsap.set('.header', { autoAlpha: 0, duration: 0.15 });
-//   }
-//   if (
-//     visit.to.url.includes('life-drawing')||
-//     visit.to.url.includes('school')||
-//     visit.to.url.includes('architecture')||
-//     visit.to.url.includes('travel')
-//   ) {
-//     header.classList.add("shrink");
-//   } else {
-//     header.classList.remove("shrink");
-//   };
-
-//   if(visit.to.url.includes('gallery')) {
-//     scrollposition = window.scrollY;
-//   }
-//   if(visit.from.url.includes('gallery')) {
-//     lightbox.pswp.close();
-//   }
-
-
-//   if(visit.from.url.includes('gallery')||visit.to.url.includes('gallery')) {
-//     preloaderTimeout = setTimeout(() => {
-//       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
-//     }, 800); 
-//   } else {
-
-//     preloaderTimeout = setTimeout(() => {
-//       gsap.to(preloader, { autoAlpha: 1, duration: 0.125 });
-//     }, 300); 
-
-//   }
-
-// }, {priority: 100});
-
 swup.hooks.on('visit:start', async (visit) => {
   const headerShrinkUrl = ['life-drawing', 'school', 'architecture', 'travel'];
   const galleryIncluded = visit.from.url.includes('gallery') || visit.to.url.includes('gallery');
-
+  console.log(visit);
   if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
     const lastslide = localStorage.getItem("closedFBindex");
     lightbox.loadAndOpen(Number(lastslide));
@@ -249,13 +245,23 @@ swup.hooks.on('visit:start', async (visit) => {
 
 
 //ANIMATION OUT AWAIT
-swup.hooks.replace('animation:out:await', async () => {
+swup.hooks.replace('animation:out:await', async (visit) => {
+  // if(visit.from.url.includes('gallery')) {
+  //   window.scrollTo(0, scrollposition);
+  // }
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
+
 });
 
 
 //ANIMATION IN AWAIT
-swup.hooks.replace('animation:in:await', async () => {
+swup.hooks.replace('animation:in:await', async (visit) => {
+  if(visit.from.url.includes('gallery')) {
+    window.scrollTo(0, scrollposition);
+  };
+  if(visit.to.url.includes('gallery')) {
+    window.scrollTo(0, scrollposition);
+  };
   gsap.set('.gridwrapper', { opacity: 0 })
   await imagesLoaded(document.querySelector('.gridwrapper'), function(instance) {
     clearTimeout(preloaderTimeout);
@@ -273,7 +279,7 @@ swup.hooks.replace('animation:in:await', async () => {
 swup.hooks.on('visit:end', async (visit) => {
   
   if(visit.from.url.includes('gallery')) {
-   window.scrollTo(0, scrollposition);
+  //  window.scrollTo(0, scrollposition);
    
    gsap.set('.gridwrapper', { autoAlpha: 0 })
     await imagesLoaded(document.querySelector('.gridwrapper'), function() {
@@ -283,10 +289,9 @@ swup.hooks.on('visit:end', async (visit) => {
       
     });
   }
-  if(visit.to.url.includes('gallery')) {
-    window.scrollTo(0, scrollposition);
-   
-   }
+  // if(visit.to.url.includes('gallery')) {
+  //   window.scrollTo(0, scrollposition);
+  //  }
   
 });
 

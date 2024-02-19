@@ -104,6 +104,36 @@ html {
 	transition: 0.25s;
 }
 
+.lightboxArrowSvg {
+	width: calc(35px + 0.5vmax);
+};
+.lightboxCloseSvg, .lightboxPreloader {
+	width: calc(25px + 0.5vmax);
+}
+
+.ArrowSvgPath {
+	fill:none;
+	stroke: var(--darkestgrey);
+	stroke-width:4;
+	stroke-linecap: round;
+	stroke-miterlimit: 10;
+}
+
+.CloseSvgPath {
+	fill:none;
+	stroke: var(--darkestgrey);
+	stroke-width: 6;
+	stroke-linecap: round;
+	stroke-miterlimit: 10;
+}
+
+.lightboxPreloaderPath {
+	fill:none;
+	stroke: var(--darkestgrey);
+	stroke-width:8; 
+	stroke-linecap:square;
+	stroke-miterlimit:10;
+}
 
 button {
 	all: unset;
