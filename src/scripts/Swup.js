@@ -42,6 +42,116 @@ const loadSVGString =
 </svg>
 `;  
 
+const pathToPageMap = {
+  "/art-design": [
+    { page: "art", activeClass: "active" },
+    { page: "lifedrawing", expandClass: "expand" },
+    { page: "school", expandClass: "expand" }
+  ],
+
+  "/art-design/life-drawing": [
+    { page: "art", activeClass: "active" },
+    { page: "lifedrawing", activeClass: "activeblue", expandClass: "expand"},
+    { page: "school", expandClass: "expand" },
+  ],
+ 
+  "/art-design/school": [
+    { page: "art", activeClass: "active" },
+    { page: "school", activeClass: "activeblue", expandClass: "expand"},
+    { page: "lifedrawing", expandClass: "expand"},
+  ],
+
+  "/travel": [
+    { page: "travel", activeClass: "active" },
+  ],
+
+  "/architecture": [
+    { page: "architecture", activeClass: "active" }
+  ],
+};
+
+
+//ACTIVE MENU STATE
+let activeItems = [];
+function activemenustate(visit) {
+  let nextPath;
+  if (visit !== undefined) {
+    nextPath = visit.to.url
+  } else {
+    nextPath = window.location.pathname
+  }
+  const pageActiveClassPairs = pathToPageMap[nextPath];
+  // console.log(pathToPageMap[nextPath]);
+  // Remove the active class from the currently active menu items
+  activeItems.forEach((item) => {
+    item.classList.remove("active");
+    item.classList.remove("activeblue");
+    // item.classList.remove("expand");
+    if (item.classList.contains("expand")) {
+      item.classList.remove("expand");
+      item.tabIndex = -1; // Set tabindex to -1 when expandClass is removed
+    }
+  });
+
+  // Reset the activeItems array
+  activeItems = [];
+
+  // If there are corresponding data-page attributes, add the active class to the appropriate menu items
+  if (pageActiveClassPairs) {
+    pageActiveClassPairs.forEach(({ page, activeClass, expandClass }) => {
+      const newActiveItems = document.querySelectorAll(`.menu a[data-page="${page}"]`);
+      newActiveItems.forEach((item) => {
+        if (activeClass) {
+          item.classList.add(activeClass);
+        }
+        if (expandClass) {
+          item.classList.add(expandClass);
+          item.tabIndex = 0;
+        }
+        activeItems.push(item);
+      });
+    });
+  }
+}
+
+
+
+//UPDATE DARK MODE
+function updateDarkMode() {
+  // Check local storage for dark mode setting
+  var isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+  // Apply the setting to the root element
+  document.documentElement.classList.toggle('dark-mode', isDarkMode);
+
+  // Update the toggle state
+  var toggle = document.querySelector('#darkModeToggleFooter');
+  var togglemobile = document.querySelector('#darkModeToggleMobile');
+
+  // Check each toggle individually
+  if (toggle !== null) {
+    toggle.checked = isDarkMode;
+
+    // Listen for changes in the toggle state
+    toggle.addEventListener('change', function(event) {
+      var isDarkMode = event.target.checked;
+      document.documentElement.classList.toggle('dark-mode', isDarkMode);
+      localStorage.setItem('darkMode', isDarkMode);
+    });
+  }
+
+  if (togglemobile !== null) {
+    togglemobile.checked = isDarkMode;
+
+    // Listen for changes in the toggle state
+    togglemobile.addEventListener('change', function(event) {
+      var isDarkMode = event.target.checked;
+      document.documentElement.classList.toggle('dark-mode', isDarkMode);
+      localStorage.setItem('darkMode', isDarkMode);
+    });
+  }
+}
+
 
 //SWUP
 const swup = new Swup({
@@ -184,6 +294,9 @@ function intersectionSetup() {
 
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
+ activemenustate();
+console.log(window.location.pathname);
+  updateDarkMode();
   PhotoswipeInit();
   imagesLoaded(allcontent, function (instance) {
     if (window.location.href.includes("gallery")) {
@@ -198,6 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //CONTENT REPLACE
 swup.hooks.on('content:replace', async (visit) => {
+  updateDarkMode();
   if (
     visit.to.url.includes('life-drawing')||
     visit.to.url.includes('school')
@@ -212,6 +326,7 @@ swup.hooks.on('content:replace', async (visit) => {
 swup.hooks.on('visit:start', async (visit) => {
   const headerShrinkUrl = ['life-drawing', 'school', 'architecture', 'travel'];
   const galleryIncluded = visit.from.url.includes('gallery') || visit.to.url.includes('gallery');
+  activemenustate(visit);
   console.log(visit);
   if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
     const lastslide = localStorage.getItem("closedFBindex");
@@ -246,9 +361,7 @@ swup.hooks.on('visit:start', async (visit) => {
 
 //ANIMATION OUT AWAIT
 swup.hooks.replace('animation:out:await', async (visit) => {
-  // if(visit.from.url.includes('gallery')) {
-  //   window.scrollTo(0, scrollposition);
-  // }
+
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
 
 });
@@ -279,8 +392,7 @@ swup.hooks.replace('animation:in:await', async (visit) => {
 swup.hooks.on('visit:end', async (visit) => {
   
   if(visit.from.url.includes('gallery')) {
-  //  window.scrollTo(0, scrollposition);
-   
+ 
    gsap.set('.gridwrapper', { autoAlpha: 0 })
     await imagesLoaded(document.querySelector('.gridwrapper'), function() {
       clearTimeout(preloaderTimeout);
@@ -289,9 +401,6 @@ swup.hooks.on('visit:end', async (visit) => {
       
     });
   }
-  // if(visit.to.url.includes('gallery')) {
-  //   window.scrollTo(0, scrollposition);
-  //  }
-  
+
 });
 

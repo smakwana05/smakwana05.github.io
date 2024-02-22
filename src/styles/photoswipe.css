@@ -1,8 +1,8 @@
 /*! PhotoSwipe main CSS by Dmytro Semenov | photoswipe.com */
 
 .pswp {
-  --pswp-bg: #ffffff;
-  --pswp-placeholder-bg: #ffffff;
+  --pswp-bg: var(--background);
+  --pswp-placeholder-bg: var(--background);
   
 
   --pswp-root-z-index: 100000;
