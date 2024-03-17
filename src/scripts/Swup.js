@@ -166,6 +166,11 @@ const swup = new Swup({
   ]
 });
 
+function isPhonePortrait() {
+  return window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches;
+}
+
+
 //LIGHTBOX
 const lightbox = new PhotoSwipeLightbox({
   gallery: '.columns.test',
@@ -178,9 +183,13 @@ const lightbox = new PhotoSwipeLightbox({
   preloaderDelay: 300,
   // initialZoomLevel: 'fit',
   initialZoomLevel: (zoomLevelObject) => {
-   
+    if (isPhonePortrait()) {
+      return zoomLevelObject.fit - 0.02;
+    } else {
       return zoomLevelObject.fit - 0.1;
+    }
   },
+
   pswpModule: () => import('photoswipe'),
   arrowPrevSVG: leftArrowSVGString,
   arrowNextSVG: rightArrowSVGString,
