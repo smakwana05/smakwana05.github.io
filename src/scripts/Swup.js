@@ -208,6 +208,7 @@ lightbox.on('close', () => {
   }, 5);   
 });
 
+lightbox.init();
 
 window.addEventListener('popstate', function() {
   clearTimeout(timer); 
