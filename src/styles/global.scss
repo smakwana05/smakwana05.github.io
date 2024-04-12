@@ -1,13 +1,13 @@
 @charset "UTF-8";
-
+	
 /*------------------------------------- 0. VARIABLES  -------------------------------------*/
 :root {
-	--white: rgb(238, 231, 223);
+	--white: rgb(255, 255, 255);
 	--black: rgb(0, 0, 0);
 	--focusoutline: rgb(0, 0, 0);
 	--background: var(--white);
 
-	--mainborderrad: 0;
+	--mainborderrad: 0rem;
 
 	--almostblack: rgb(20, 20, 20);
 	--darkestgrey: rgb(40,40,40); //menu link colour
