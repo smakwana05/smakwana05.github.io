@@ -43,7 +43,7 @@ const loadSVGString =
 `;  
 
 const pathToPageMap = {
-  "/art-design/": [
+  "/art-design": [
     { page: "art", activeClass: "active" },
     { page: "lifedrawing", expandClass: "expand" },
     { page: "school", expandClass: "expand" }
@@ -65,7 +65,7 @@ const pathToPageMap = {
     { page: "travel", activeClass: "active" },
   ],
 
-  "/architecture/": [
+  "/architecture": [
     { page: "architecture", activeClass: "active" }
   ],
 };
