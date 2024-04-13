@@ -61,7 +61,7 @@ const pathToPageMap = {
     { page: "lifedrawing", expandClass: "expand"},
   ],
 
-  "/travel/": [
+  "/travel": [
     { page: "travel", activeClass: "active" },
   ],
 
@@ -371,7 +371,7 @@ swup.hooks.on('visit:start', async (visit) => {
 
 //ANIMATION OUT AWAIT
 swup.hooks.replace('animation:out:await', async (visit) => {
-    activemenustate(visit);
+
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
 
 });
@@ -379,7 +379,6 @@ swup.hooks.replace('animation:out:await', async (visit) => {
 
 //ANIMATION IN AWAIT
 swup.hooks.replace('animation:in:await', async (visit) => {
-  activemenustate(visit);
   if(visit.from.url.includes('gallery')) {
     window.scrollTo(0, scrollposition);
   };
