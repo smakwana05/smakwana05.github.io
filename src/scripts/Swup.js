@@ -42,77 +42,77 @@ const loadSVGString =
 </svg>
 `;  
 
-const pathToPageMap = {
-  "/art-design": [
-    { page: "art", activeClass: "active" },
-    { page: "lifedrawing", expandClass: "expand" },
-    { page: "school", expandClass: "expand" }
-  ],
+// const pathToPageMap = {
+//   "/art-design": [
+//     { page: "art", activeClass: "active" },
+//     { page: "lifedrawing", expandClass: "expand" },
+//     { page: "school", expandClass: "expand" }
+//   ],
 
-  "/art-design/life-drawing": [
-    { page: "art", activeClass: "active" },
-    { page: "lifedrawing", activeClass: "activeblue", expandClass: "expand"},
-    { page: "school", expandClass: "expand" },
-  ],
+//   "/art-design/life-drawing": [
+//     { page: "art", activeClass: "active" },
+//     { page: "lifedrawing", activeClass: "activeblue", expandClass: "expand"},
+//     { page: "school", expandClass: "expand" },
+//   ],
  
-  "/art-design/school": [
-    { page: "art", activeClass: "active" },
-    { page: "school", activeClass: "activeblue", expandClass: "expand"},
-    { page: "lifedrawing", expandClass: "expand"},
-  ],
+//   "/art-design/school": [
+//     { page: "art", activeClass: "active" },
+//     { page: "school", activeClass: "activeblue", expandClass: "expand"},
+//     { page: "lifedrawing", expandClass: "expand"},
+//   ],
 
-  "/travel": [
-    { page: "travel", activeClass: "active" },
-  ],
+//   "/travel": [
+//     { page: "travel", activeClass: "active" },
+//   ],
 
-  "/architecture": [
-    { page: "architecture", activeClass: "active" }
-  ],
-};
+//   "/architecture": [
+//     { page: "architecture", activeClass: "active" }
+//   ],
+// };
 
 
-//ACTIVE MENU STATE
-let activeItems = [];
-function activemenustate(visit) {
-  let nextPath;
-  if (visit !== undefined) {
-    nextPath = visit.to.url
-  } else {
-    nextPath = window.location.pathname
-  }
-  const pageActiveClassPairs = pathToPageMap[nextPath];
-  // console.log(pathToPageMap[nextPath]);
-  // Remove the active class from the currently active menu items
-  activeItems.forEach((item) => {
-    item.classList.remove("active");
-    item.classList.remove("activeblue");
-    // item.classList.remove("expand");
-    if (item.classList.contains("expand")) {
-      item.classList.remove("expand");
-      item.tabIndex = -1; // Set tabindex to -1 when expandClass is removed
-    }
-  });
+// //ACTIVE MENU STATE
+// let activeItems = [];
+// function activemenustate(visit) {
+//   let nextPath;
+//   if (visit !== undefined) {
+//     nextPath = visit.to.url
+//   } else {
+//     nextPath = window.location.pathname
+//   }
+//   const pageActiveClassPairs = pathToPageMap[nextPath];
+//   // console.log(pathToPageMap[nextPath]);
+//   // Remove the active class from the currently active menu items
+//   activeItems.forEach((item) => {
+//     item.classList.remove("active");
+//     item.classList.remove("activeblue");
+//     // item.classList.remove("expand");
+//     if (item.classList.contains("expand")) {
+//       item.classList.remove("expand");
+//       item.tabIndex = -1; // Set tabindex to -1 when expandClass is removed
+//     }
+//   });
 
-  // Reset the activeItems array
-  activeItems = [];
+//   // Reset the activeItems array
+//   activeItems = [];
 
-  // If there are corresponding data-page attributes, add the active class to the appropriate menu items
-  if (pageActiveClassPairs) {
-    pageActiveClassPairs.forEach(({ page, activeClass, expandClass }) => {
-      const newActiveItems = document.querySelectorAll(`.menu a[data-page="${page}"]`);
-      newActiveItems.forEach((item) => {
-        if (activeClass) {
-          item.classList.add(activeClass);
-        }
-        if (expandClass) {
-          item.classList.add(expandClass);
-          item.tabIndex = 0;
-        }
-        activeItems.push(item);
-      });
-    });
-  }
-}
+//   // If there are corresponding data-page attributes, add the active class to the appropriate menu items
+//   if (pageActiveClassPairs) {
+//     pageActiveClassPairs.forEach(({ page, activeClass, expandClass }) => {
+//       const newActiveItems = document.querySelectorAll(`.menu a[data-page="${page}"]`);
+//       newActiveItems.forEach((item) => {
+//         if (activeClass) {
+//           item.classList.add(activeClass);
+//         }
+//         if (expandClass) {
+//           item.classList.add(expandClass);
+//           item.tabIndex = 0;
+//         }
+//         activeItems.push(item);
+//       });
+//     });
+//   }
+// }
 
 
 
@@ -304,7 +304,7 @@ function intersectionSetup() {
 
 //ONCE DOMCONTENT
 document.addEventListener('DOMContentLoaded', () => {
- activemenustate();
+//  activemenustate();
 console.log(window.location.pathname);
   updateDarkMode();
   PhotoswipeInit();
@@ -336,7 +336,7 @@ swup.hooks.on('content:replace', async (visit) => {
 swup.hooks.on('visit:start', async (visit) => {
   const headerShrinkUrl = ['life-drawing', 'school', 'architecture', 'travel'];
   const galleryIncluded = visit.from.url.includes('gallery') || visit.to.url.includes('gallery');
-  activemenustate(visit);
+  // activemenustate(visit);
   console.log(visit);
   if(visit.to.url.includes('gallery') && visit.history.direction === 'forwards') {
     const lastslide = localStorage.getItem("closedFBindex");
