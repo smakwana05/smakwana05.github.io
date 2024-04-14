@@ -111,7 +111,10 @@ html {
 .lightboxCloseSvg, .lightboxPreloader {
 	width: calc(25px + 0.5vmax);
 }
-
+.lightboxArrowSvgright {
+	width: calc(35px + 0.5vmax);
+	transform: scale(-1);
+};
 .ArrowSvgPath {
 	fill:none;
 	stroke: var(--darkestgrey);
@@ -288,6 +291,10 @@ a {
 // 	visibility: visible;
 // 	pointer-events: all;
 // }
+
+
+#dummy {
+display: none;}
 
 .menu {
 	position: absolute;

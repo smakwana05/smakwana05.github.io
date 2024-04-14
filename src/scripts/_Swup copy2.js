@@ -15,18 +15,16 @@ let preloaderTimeout;
 var preloaderOnce = document.querySelector(".preloader-onceload");
 let scrollposition = 0;
 
-
-//PSWP SVGS
 const leftArrowSVGString = `
 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxArrowSvg" viewBox="0 0 100 100">
           <path d="M69.7 5 21.4 50 70 95" class="ArrowSvgPath"/>
-</svg>
-`;
+</svg>`;
+
 const rightArrowSVGString = `
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxArrowSvgright" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxArrowSvg" viewBox="0 0 100 100" transform="scale(-1, -1)">
           <path d="M69.7 5 21.4 50 70 95" class="ArrowSvgPath"/>
-</svg>
-`;
+</svg>`;
+
 const closeSVGString = `
 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="lightboxCloseSvg" viewBox="0 0 100 100">
 
@@ -34,13 +32,101 @@ const closeSVGString = `
 
 </svg>
 `;
-const loadSVGString = `
+
+const loadSVGString = 
+// `<div class="pswp__icn"><div class="circlespin--lightbox"></div></div>  `
+`
 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="pswp__icn" viewBox="0 0 100 100">
       <path d="M50 90c-22.1 0-40-17.9-40-40" style="fill:none;stroke:#000;stroke-width:8; stroke-linecap:square;stroke-miterlimit:10"/>
 </svg>
 `;  
 
-//UPDATE MENU STATE
+// const pathToPageMap = {
+//   "/art-design": [
+//     { page: "art", activeClass: "active" },
+//     { page: "lifedrawing", expandClass: "expand" },
+//     { page: "school", expandClass: "expand" }
+//   ],
+
+//   "/art-design/life-drawing": [
+//     { page: "art", activeClass: "active" },
+//     { page: "lifedrawing", activeClass: "activeblue", expandClass: "expand"},
+//     { page: "school", expandClass: "expand" },
+//   ],
+ 
+//   "/art-design/school": [
+//     { page: "art", activeClass: "active" },
+//     { page: "school", activeClass: "activeblue", expandClass: "expand"},
+//     { page: "lifedrawing", expandClass: "expand"},
+//   ],
+
+//   "/travel": [
+//     { page: "travel", activeClass: "active" },
+//   ],
+
+//   "/architecture": [
+//     { page: "architecture", activeClass: "active" }
+//   ],
+// };
+
+
+// //ACTIVE MENU STATE
+// let activeItems = [];
+// function activemenustate(visit) {
+//   let nextPath;
+//   if (visit !== undefined) {
+//     nextPath = visit.to.url
+//   } else {
+//     nextPath = window.location.pathname
+//   }
+//   const pageActiveClassPairs = pathToPageMap[nextPath];
+//   // console.log(pathToPageMap[nextPath]);
+//   // Remove the active class from the currently active menu items
+//   activeItems.forEach((item) => {
+//     item.classList.remove("active");
+//     item.classList.remove("activeblue");
+//     // item.classList.remove("expand");
+//     if (item.classList.contains("expand")) {
+//       item.classList.remove("expand");
+//       item.tabIndex = -1; // Set tabindex to -1 when expandClass is removed
+//     }
+//   });
+
+//   // Reset the activeItems array
+//   activeItems = [];
+
+//   // If there are corresponding data-page attributes, add the active class to the appropriate menu items
+//   if (pageActiveClassPairs) {
+//     pageActiveClassPairs.forEach(({ page, activeClass, expandClass }) => {
+//       const newActiveItems = document.querySelectorAll(`.menu a[data-page="${page}"]`);
+//       newActiveItems.forEach((item) => {
+//         if (activeClass) {
+//           item.classList.add(activeClass);
+//         }
+//         if (expandClass) {
+//           item.classList.add(expandClass);
+//           item.tabIndex = 0;
+//         }
+//         activeItems.push(item);
+//       });
+//     });
+//   }
+// }
+
+
+// function updateMenuState() {
+//   const currentPath = window.location.pathname;
+//   const menuItems = document.querySelectorAll('a[data-page]');
+  
+//   menuItems.forEach(item => item.classList.remove('active'));
+
+//   menuItems.forEach(item => {
+//     if (currentPath.includes(item.dataset.page)) {
+//       item.classList.add('active');
+//     }
+//   });
+// }
+
 function updateMenuState() {
   const path = window.location.pathname;
   const menuItems = document.querySelectorAll('a');
@@ -102,8 +188,12 @@ const swup = new Swup({
   ]
 });
 
+function isPhonePortrait() {
+  return window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches;
+}
 
-//LIGHTBOX & PSWP
+
+//LIGHTBOX
 const lightbox = new PhotoSwipeLightbox({
   gallery: '.columns.test',
   children: 'button > a',
@@ -130,8 +220,6 @@ const lightbox = new PhotoSwipeLightbox({
 
 });
 
-lightbox.init();
-
 lightbox.on('close', () => {
   const indexonclose = pswp.currIndex;
   localStorage.setItem("closedFBindex", indexonclose);
@@ -140,6 +228,8 @@ lightbox.on('close', () => {
     history.back(); // go back after a delay if no popstate event has occurred
   }, 5);   
 });
+
+lightbox.init();
 
 window.addEventListener('popstate', function() {
   clearTimeout(timer); 
@@ -162,9 +252,6 @@ function PhotoswipeInit() {
     });
   });
   lightbox.init();
-}
-function isPhonePortrait() {
-  return window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches;
 }
 
 
@@ -260,11 +347,12 @@ if (document.readyState === 'complete') {
   document.addEventListener('DOMContentLoaded', () => updateMenuState());
 };
 
+swup.hooks.on('page:view', () => updateMenuState());
+
 
 
 //CONTENT REPLACE
 swup.hooks.on('content:replace', async (visit) => {
-  
   updateDarkMode();
   if (
     visit.to.url.includes('life-drawing')||
@@ -278,7 +366,6 @@ swup.hooks.on('content:replace', async (visit) => {
 
 //VISIT START
 swup.hooks.on('visit:start', async (visit) => {
- 
   const headerShrinkUrl = ['life-drawing', 'school', 'architecture', 'travel'];
   const galleryIncluded = visit.from.url.includes('gallery') || visit.to.url.includes('gallery');
   // activemenustate(visit);
@@ -316,14 +403,14 @@ swup.hooks.on('visit:start', async (visit) => {
 
 //ANIMATION OUT AWAIT
 swup.hooks.replace('animation:out:await', async (visit) => {
-    updateMenuState();
+
    await gsap.to('.gridwrapper', { autoAlpha: 0, duration: 0.25 });
+
 });
 
 
 //ANIMATION IN AWAIT
 swup.hooks.replace('animation:in:await', async (visit) => {
-  updateMenuState();
   if(visit.from.url.includes('gallery')) {
     window.scrollTo(0, scrollposition);
   };
@@ -340,8 +427,7 @@ swup.hooks.replace('animation:in:await', async (visit) => {
 },{priority: -100});
 
 
-//PAGE VIEW
-// swup.hooks.on('page:view', () => updateMenuState());
+
 
 
 //VISIT END

@@ -12,7 +12,7 @@ const {headerclass} = Astro.props;
 
     <div class="menu">
         <nav class="menucard">	
-            <a href="/art-design" data-page="art" >Art / Design</a>
+            <a class="active" href="/art-design" data-page="art" >Art / Design</a>
                 <a class="submenu" href="/art-design/life-drawing" data-page="lifedrawing">Life Drawing</a>
                 <a class="submenu" href="/art-design/life-drawing" data-page="school">School</a>
                 <a class="submenu" href="/art-design/life-drawing" data-page="crafts">Crafts</a>
@@ -20,6 +20,8 @@ const {headerclass} = Astro.props;
             <a href="/travel" data-page="travel" >Travel</a>
             <a href="/process" data-page="process" >Process</a>
             <a href="/about" data-page="about" >About</a>
+
+        
 
             <div class="footer-mobile">
                 <i class="fab fa-linkedin"></i>
