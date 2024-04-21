@@ -136,7 +136,7 @@ lightbox.on('close', () => {
   console.log("close");
   timer = setTimeout(function() {
     history.back(); // go back after a delay if no popstate event has occurred
-  }, 5);   
+  }, 1);   
 });
 
 window.addEventListener('popstate', function() {
