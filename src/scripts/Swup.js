@@ -345,16 +345,16 @@ swup.hooks.replace('animation:in:await', async (visit) => {
 //VISIT END
 swup.hooks.on('visit:end', async (visit) => {
   
-  if(visit.from.url.includes('gallery')) {
+  // if(visit.from.url.includes('gallery')) {
  
-   gsap.set('.gridwrapper', { autoAlpha: 0 })
-    await imagesLoaded(document.querySelector('.gridwrapper'), function() {
-      clearTimeout(preloaderTimeout);
-      gsap.to(preloader, { autoAlpha: 0 });
-      gsap.to('.gridwrapper', { autoAlpha: 1 });
+  //  gsap.set('.gridwrapper', { autoAlpha: 0 })
+  //   await imagesLoaded(document.querySelector('.gridwrapper'), function() {
+  //     clearTimeout(preloaderTimeout);
+  //     gsap.to(preloader, { autoAlpha: 0 });
+  //     gsap.to('.gridwrapper', { autoAlpha: 1 });
       
-    });
-  }
+  //   });
+  // }
 
 });
 
