@@ -130,19 +130,14 @@ const lightbox = new PhotoSwipeLightbox({
 
 });
 
-lightbox.init();
-
-if (lightbox) {
-  lightbox.on('close', () => {
-    const indexonclose = pswp.currIndex;
-    localStorage.setItem("closedFBindex", indexonclose);
-    console.log("close");
-    timer = setTimeout(function() {
-      history.back(); // go back after a delay if no popstate event has occurred
-    }, 5);   
-  });
-}
-
+lightbox.on('close', () => {
+  const indexonclose = pswp.currIndex;
+  localStorage.setItem("closedFBindex", indexonclose);
+  console.log("close");
+  timer = setTimeout(function() {
+    history.back(); // go back after a delay if no popstate event has occurred
+  }, 5);   
+});
 
 window.addEventListener('popstate', function() {
   clearTimeout(timer); 
