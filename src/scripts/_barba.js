@@ -1,5 +1,4 @@
 import barba from '@barba/core';
-import barbaPrefetch from '@barba/prefetch';
 import { gsap } from "gsap";
 import imagesLoaded from 'imagesloaded';
 import { Fancybox } from '@fancyapps/ui';
