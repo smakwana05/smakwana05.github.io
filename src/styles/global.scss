@@ -38,7 +38,7 @@
 	--headermobile: calc(55px + 1svh);
 	--mobilecontainer: calc(100dvh - 118px);
 
-	--shrinktypical: translateY(-16svh);
+	--shrinktypical: translateY(-15svh);
 	--shrinkmore: translateY(-24svh);
 	--shrinkless: translateY(-12svh);
 	--navbarheight: calc(45px + 1svh);
@@ -242,7 +242,7 @@ a {
 .header {
 	position: relative;
 	display: grid;
-	height: 33vh;
+	height: 32vh;
 	z-index: 1;
 	transition: transform 300ms ease;
 	will-change: transform;
