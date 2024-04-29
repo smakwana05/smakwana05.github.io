@@ -165,7 +165,7 @@ body {
 }
 
 .allcontent {
-	max-height: 100vh;
+	// max-height: 100vh;
 
 	opacity: 0;
 	// position: absolute;
@@ -663,6 +663,7 @@ display: none;}
 		transition: 0.5s;
 		opacity: 1;
 		border-radius: var(--mainborderrad);	
+		object-fit: cover;
 
 		&.hide {
 			// visibility: hidden;
@@ -793,6 +794,12 @@ cursor: pointer;
 	box-sizing: border-box;
 	// background-color: var(--footerbg);
 
+	&.absolute {
+		margin-top: 0;
+		margin-bottom: 0;
+		position: absolute;
+		bottom: -10vh;
+	}
 
 	.fab.fa-linkedin{
 		grid-column-start: 2;
@@ -1331,6 +1338,7 @@ html {
 	// padding-bottom: calc(29svh); //55% 26.4svh
 	padding-bottom: initial;
 	aspect-ratio: auto;
+	height: initial;
 
 	.overlay.travel, &:hover .overlay.travel {
 		// opacity: 0.75;
@@ -1364,6 +1372,7 @@ html {
 	>img {
 		height: 100%;
 		object-fit: cover;
+		position: relative;
 
 		&.alignbottom {
 			object-position: bottom;
