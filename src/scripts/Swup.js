@@ -273,6 +273,12 @@ swup.hooks.on('content:replace', async (visit) => {
   }
 });
 
+swup.hooks.before('visit:start', (visit) => {
+    if(visit.from.url.includes('gallery')) {
+    console.log(lightbox);
+    lightbox.pswp.close();
+  }
+})
 
 //VISIT START
 swup.hooks.on('visit:start', async (visit) => {
@@ -300,9 +306,10 @@ swup.hooks.on('visit:start', async (visit) => {
     scrollposition = window.scrollY;
   }
 
-  if(visit.from.url.includes('gallery')) {
-    lightbox.pswp.close();
-  }
+  // if(visit.from.url.includes('gallery')) {
+  //   console.log(lightbox);
+  //   lightbox.pswp.close();
+  // }
 
   const delay = galleryIncluded ? 800 : 300;
   preloaderTimeout = setTimeout(() => {
