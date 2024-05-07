@@ -448,7 +448,7 @@ display: none;}
 }
 
 .fadeonly {
-    animation: fadeonly 0.25s;
+    animation: fadeonly 0.3s;
 }
 
 @keyframes fadeonly {
@@ -462,7 +462,7 @@ display: none;}
 }
 
 .fadeoutonly {
-    animation: fadeoutonly 0.25s ;
+    animation: fadeoutonly 0.3s ;
 }
 
 @keyframes fadeoutonly {
@@ -1267,8 +1267,9 @@ html {
 .columns {
 	&.test {
 		column-count: 2;
-		width: 85%;
+		width: 85vw;
 		gap: 2px;
+		max-width: none;
 	  }
 }
 
@@ -1389,9 +1390,9 @@ html {
 		}
 	}
 
-	@media (orientation: landscape) {
-		padding-bottom: 100%;
-	}
+	// @media (orientation: landscape) {
+	// 	// padding-bottom: 100%;
+	// }
 }
 
 }
