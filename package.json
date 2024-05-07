@@ -17,6 +17,7 @@
     "@swup/a11y-plugin": "^4.5.0",
     "@swup/debug-plugin": "^4.0.4",
     "@swup/head-plugin": "^2.1.2",
+    "@swup/js-plugin": "^3.1.1",
     "@swup/preload-plugin": "^3.2.7",
     "@swup/progress-plugin": "^3.1.2",
     "@swup/scripts-plugin": "^2.1.0",

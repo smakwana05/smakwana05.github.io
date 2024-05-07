@@ -1,7 +1,7 @@
 ---
 import HtmlBody from "@layouts/HtmlBody.astro";
 import Footer from "@components/Footer.astro";
-import GalleryImage from "@components/GalleryImage.astro"
+import GalleryImage from "@components/GalleryImage_Orig.astro"
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 ---
@@ -11,7 +11,7 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 <HtmlBody  headerclass="header shrink">
 
 
-	<div id="swup" data-barba="container" data-barba-namespace="blank" class="gridwrapper shrink">
+	<div id="swup" data-barba="container" data-barba-namespace="blank" class="gridwrapper shrink swup-preserve-scroll">
 		<div class="columns test hidden">
 
 		<GalleryImage
@@ -89,7 +89,7 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 			
 
 		</div>
-		<Footer fclass="footer absolute"/>
+		<Footer fclass="footer"/>
 	</div>
 
 <!-- <script>
